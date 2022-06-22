@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>day220622_2 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="제 8장 통계 분석통계(statistics): 수량 데이터에서 다양한 방법으로 새로운 사실들을 찾아내는 학문 1)기술통계기술통계(descriptive statistics): 평균, 최솟값, 최댓값, 중앙값과 같은 데이터의 특징을 알려주는 값들 2)추론통계추론통계(inferential statistics): 변수 간의 관계를 파악하고, 이를 토대로 변수 간의">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day220622_2">
+<meta property="og:url" content="https://bennypark.github.io/2022/06/22/day220622_2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="제 8장 통계 분석통계(statistics): 수량 데이터에서 다양한 방법으로 새로운 사실들을 찾아내는 학문 1)기술통계기술통계(descriptive statistics): 평균, 최솟값, 최댓값, 중앙값과 같은 데이터의 특징을 알려주는 값들 2)추론통계추론통계(inferential statistics): 변수 간의 관계를 파악하고, 이를 토대로 변수 간의">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-3.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-4.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-5.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-6.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-2-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-2-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-3-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-4-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-4-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-4-3.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-4-4.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-5-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-5-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-6-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-6-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-6-3.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-7-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-7-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-7-3.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-8-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-8-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-8-3.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-9-1.png">
+<meta property="article:published_time" content="2022-06-22T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T08:01:42.206Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bennypark.github.io/images/rmd_0622/unnamed-chunk-1-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://BennyPark.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-day220622_2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/22/day220622_2/" class="article-date">
+  <time class="dt-published" datetime="2022-06-22T00:00:00.000Z" itemprop="datePublished">2022-06-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      day220622_2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>제 8장 통계 분석<br>통계(statistics): 수량 데이터에서 다양한 방법으로 새로운 사실들을 찾아내는 학문</p>
+<p>1)기술통계<br>기술통계(descriptive statistics): 평균, 최솟값, 최댓값, 중앙값과 같은 데이터의 특징을 알려주는 값들</p>
+<p>2)추론통계<br>추론통계(inferential statistics): 변수 간의 관계를 파악하고, 이를 토대로 변수 간의 이노가관게나 새로운 사실들을 밝혀내는 것<br>(1)평균 차이 검정: 집단ㅂ별로 평균의 차이가 실제로 있는가를 검정하는 것.<br>  예) 고등학교 3학년 국어 점수가 남학생 평균:82.1, 여학생 평균 82.3점. 남여학생의 점수차는 0.2점이다. 위 내용은 단순히 “이번 국어시험 점수가 여학생이 남학생보다 0.2점 높다.”는 결론을 통계적으로 검점해야 한다.  </p>
+<p>(2)교차분석: 범주형 변수로 구성된 집단들의 관련성을 검정하는 통계 분석. </p>
+<p>(“카이제곱 검정, 카이스퀘어검정, 독립성 검정”이라고도 함)</p>
+<p>교차분석 결과는 관계가 있다, 없다 등2가지입니다. </p>
+<p>예)두개의 ‘소형 50세대와 대형 50세대’가 있는 아파트 2개 단지의 대소형 TV 소유 현황을 조사했다.<br>1번 단지는 대형 TV 90개, 소형TV 10개 &#x3D;&gt; 아파트 크기와 TV크기는 관계 없음<br>2번 단지는 대형 TV 55개, 소형TV 45개 &#x3D;&gt; 아파트 크기와 TV크기는 관계가 있다.</p>
+<p>(3)상관관계분석: 변수 간의 상관관계(correlation)를 알아 보는 것. 관계ㅅ의 경우의 수는 없음, 적음, 많음, 같음 이 있다. </p>
+<p>(4)회귀분석: 독립변수와 종속변수간의 인과관계를 분석하는 것<br>독립변수(independent variable):영향을 주는 변수<br>종속변수(dependent variable): 영향을 받는 변수<br>예)”월급이 증가하면 외식횟수가 늘어날 것”<br>“월급”-&gt; 독립변수, “외식횟수” -&gt; 종속변수<br>즉 월급의 증감이 외식횟수에 미치는 영향을 확률적으로 분석하는 것이 회귀 분석이다.</p>
+<ol start="2">
+<li>통계 검정</li>
+</ol>
+<ol>
+<li>가설(hypothesis):어떤 현상을 설명하기 위해서 가정하는 명제, 증명되지 않은 추정.<br>귀무가설(歸無假說):설정한 가설이 맞을 확률이 극히 적어서 처음부터 기각될 것으로 예상되는 가설<br>대립가설(對立假說):귀무가설이 기각될 경우 받아들여지는 가설 | 연구자가 검정하고자 하는 가설</li>
+</ol>
+<p>제 9장 그래프 그리기<br>##ggplot2 강의</p>
+<ul>
+<li>데이터 불러오기</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>readxl<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">who_disease <span class="operator">&lt;-</span>read_xlsx<span class="punctuation">(</span><span class="string">&quot;who_disease.xlsx&quot;</span><span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span><span class="punctuation">)</span><span class="comment">#도화지를 펼치기</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> year<span class="punctuation">,</span> y<span class="operator">=</span>cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment">#x는 가로 y는 세로</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-3.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> year<span class="punctuation">,</span> y<span class="operator">=</span>cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="comment">#그래프 종류</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-4.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#옵션 1. 투명도 주기</span></span><br><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> year<span class="punctuation">,</span> y<span class="operator">=</span>cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span>alpha <span class="operator">=</span> <span class="number">0.1</span><span class="punctuation">)</span> </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-5.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#옵션 2. 색상 변화</span></span><br><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> year<span class="punctuation">,</span> y<span class="operator">=</span>cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span>alpha <span class="operator">=</span> <span class="number">0.1</span><span class="punctuation">,</span> color <span class="operator">=</span> <span class="string">&quot;#6048E8&quot;</span><span class="punctuation">)</span> </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-1-6.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#옵션 3. </span></span><br></pre></td></tr></table></figure>
+<p>colour 입력 위치<br>ggplot(파일명, aes(x,y, colour&#x3D; 컬럼명))<br>  +geom_poin(colour&#x3D; “컬러명”)</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#옵션 3. color 입력 위치</span></span><br><span class="line">str<span class="punctuation">(</span>iris<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## &#x27;data.frame&#x27;:	150 obs. of  5 variables:</span><br><span class="line">##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span><br><span class="line">##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span><br><span class="line">##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span><br><span class="line">##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span><br><span class="line">##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>iris<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> Sepal.Length<span class="punctuation">,</span> y<span class="operator">=</span>Sepal.Width<span class="punctuation">,</span> colour<span class="operator">=</span> Species<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-2-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>iris<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> Sepal.Length<span class="punctuation">,</span> y<span class="operator">=</span>Sepal.Width<span class="punctuation">,</span> colour<span class="operator">=</span> Species<span class="punctuation">,</span> size <span class="operator">=</span> Petal.Length<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-2-2.png"><!-- --></p>
+<ul>
+<li>산점도 :x 축 수치형 연속형 데이터, y축 수치형 연속형 데이터</li>
+<li>기본적인 통계적인 내용을 알아야된다.</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>who_disease<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> year<span class="punctuation">,</span> y<span class="operator">=</span>cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span>alpha <span class="operator">=</span> <span class="number">0.1</span><span class="punctuation">)</span> </span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-3-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#그래프 선택을 할 때, </span></span><br></pre></td></tr></table></figure>
+<p>-히스토그램</p>
+<ul>
+<li>질병 데이터<br>region &#x3D;&#x3D; AMR , year &#x3D;&#x3D;1980, disease &#x3D;&#x3D; 백일해(pertussis) case &gt; 0</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>dplyr<span class="punctuation">)</span><span class="comment"># 데이터 처리에 특화된 R 패키지</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## 다음의 패키지를 부착합니다: &#x27;dplyr&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## The following objects are masked from &#x27;package:stats&#x27;:</span><br><span class="line">## </span><br><span class="line">##     filter, lag</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## The following objects are masked from &#x27;package:base&#x27;:</span><br><span class="line">## </span><br><span class="line">##     intersect, setdiff, setequal, union</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str<span class="punctuation">(</span>who_disease<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">## tibble [43,262 × 6] (S3: tbl_df/tbl/data.frame)</span><br><span class="line">##  $ region     : chr [1:43262] &quot;EMR&quot; &quot;EUR&quot; &quot;AFR&quot; &quot;EUR&quot; ...</span><br><span class="line">##  $ countryCode: chr [1:43262] &quot;AFG&quot; &quot;ALB&quot; &quot;DZA&quot; &quot;AND&quot; ...</span><br><span class="line">##  $ country    : chr [1:43262] &quot;Afghanistan&quot; &quot;Albania&quot; &quot;Algeria&quot; &quot;Andorra&quot; ...</span><br><span class="line">##  $ disease    : chr [1:43262] &quot;measles&quot; &quot;measles&quot; &quot;measles&quot; &quot;measles&quot; ...</span><br><span class="line">##  $ year       : num [1:43262] 2016 2016 2016 2016 2016 ...</span><br><span class="line">##  $ cases      : num [1:43262] 638 17 41 0 53 0 0 2 99 27 ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data2 <span class="operator">&lt;-</span>who_disease <span class="operator">%&gt;%</span> </span><br><span class="line">  filter<span class="punctuation">(</span>region <span class="operator">==</span> <span class="string">&#x27;AMR&#x27;</span><span class="punctuation">,</span> </span><br><span class="line">         year <span class="operator">==</span> <span class="number">1980</span><span class="punctuation">,</span> </span><br><span class="line">         disease <span class="operator">==</span> <span class="string">&#x27;pertussis&#x27;</span><span class="punctuation">,</span> </span><br><span class="line">         cases <span class="operator">&gt;</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data2<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> cases<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_histogram<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-4-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data2<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> country<span class="punctuation">,</span> y<span class="operator">=</span> cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> geom_col<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-4-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#옵션</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data2<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> country<span class="punctuation">,</span> y<span class="operator">=</span> cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> geom_col<span class="punctuation">(</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">   coord_flip<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-4-3.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ggplot(data2, aes(x=cases , y= country)) + geom_col()위 옵션과 같은 효과가 있음.</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data2<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> country<span class="punctuation">,</span> y<span class="operator">=</span> cases<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> geom_col<span class="punctuation">(</span>fill <span class="operator">=</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">)</span><span class="operator">+</span><span class="comment">#y축의 색을 입히는 방법</span></span><br><span class="line">   coord_flip<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-4-4.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> diamonds<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span>carat<span class="punctuation">,</span>y<span class="operator">=</span>price<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-5-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> diamonds<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span>carat<span class="punctuation">,</span>y<span class="operator">=</span>price<span class="punctuation">,</span> col<span class="operator">=</span>cut<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-5-2.png"><!-- --></p>
+<p>  -막대그래프에 2개 범주 내용 반영하기</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str<span class="punctuation">(</span>diamonds<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## tibble [53,940 × 10] (S3: tbl_df/tbl/data.frame)</span><br><span class="line">##  $ carat  : num [1:53940] 0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...</span><br><span class="line">##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...</span><br><span class="line">##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...</span><br><span class="line">##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...</span><br><span class="line">##  $ depth  : num [1:53940] 61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...</span><br><span class="line">##  $ table  : num [1:53940] 55 61 65 58 58 57 57 55 61 61 ...</span><br><span class="line">##  $ price  : int [1:53940] 326 326 327 334 335 336 336 337 337 338 ...</span><br><span class="line">##  $ x      : num [1:53940] 3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...</span><br><span class="line">##  $ y      : num [1:53940] 3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...</span><br><span class="line">##  $ z      : num [1:53940] 2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>diamonds<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> color<span class="punctuation">,</span> fill<span class="operator">=</span> cut<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_bar<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-6-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>diamonds<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> color<span class="punctuation">,</span> fill<span class="operator">=</span> cut<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_bar<span class="punctuation">(</span>position <span class="operator">=</span> <span class="string">&quot;fill&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-6-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>diamonds<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> color<span class="punctuation">,</span> fill<span class="operator">=</span> cut<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> geom_bar<span class="punctuation">(</span>position <span class="operator">=</span> <span class="string">&quot;dodge&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-6-3.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lesisure <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;leisure.csv&quot;</span><span class="punctuation">)</span></span><br><span class="line">str<span class="punctuation">(</span>lesisure<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## &#x27;data.frame&#x27;:	200 obs. of  3 variables:</span><br><span class="line">##  $ age    : int  2 2 3 3 4 4 5 5 6 6 ...</span><br><span class="line">##  $ sex    : chr  &quot;female&quot; &quot;male&quot; &quot;female&quot; &quot;male&quot; ...</span><br><span class="line">##  $ expense: num  25.8 21 30 16.3 25.7 ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data<span class="operator">=</span> lesisure<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> age<span class="punctuation">,</span> y<span class="operator">=</span>expense<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_line<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-7-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data<span class="operator">=</span> lesisure<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> age<span class="punctuation">,</span> y<span class="operator">=</span>expense<span class="punctuation">,</span> col<span class="operator">=</span>sex<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_line<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-7-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data<span class="operator">=</span> lesisure<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> age<span class="punctuation">,</span> y<span class="operator">=</span>expense<span class="punctuation">,</span> col<span class="operator">=</span>sex<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_line<span class="punctuation">(</span>size<span class="operator">=</span><span class="number">1</span><span class="punctuation">,</span>linetype<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-7-3.png"><!-- --></p>
+<p>###막대그래프의 순서 변경</p>
+<ul>
+<li>reorder():<br>원래 순서:aes(x&#x3D;a, y&#x3D;b)<br>오름차순 정렬: aes(x&#x3D;reorder(a,b),y&#x3D;b)<br>내림차순 정렬: aes(x&#x3D;reorder(a,-b),y&#x3D;b)</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mpg3 <span class="operator">&lt;-</span>read.csv<span class="punctuation">(</span><span class="string">&quot;mpg1.csv&quot;</span><span class="punctuation">,</span> stringsAsFactors <span class="operator">=</span> <span class="built_in">F</span><span class="punctuation">)</span></span><br><span class="line">drv_hwy <span class="operator">&lt;-</span>mpg3 <span class="operator">%&gt;%</span> </span><br><span class="line">  group_by<span class="punctuation">(</span>drv<span class="punctuation">)</span> <span class="operator">%&gt;%</span> <span class="comment">#drv</span></span><br><span class="line">  summarise<span class="punctuation">(</span>mean_hwy<span class="operator">=</span>mean<span class="punctuation">(</span>hwy<span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment">#범주별로hwy</span></span><br><span class="line">str<span class="punctuation">(</span>drv_hwy<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## tibble [3 × 2] (S3: tbl_df/tbl/data.frame)</span><br><span class="line">##  $ drv     : chr [1:3] &quot;4&quot; &quot;f&quot; &quot;r&quot;</span><br><span class="line">##  $ mean_hwy: num [1:3] 19.2 28.2 21</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> drv_hwy<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span>drv<span class="punctuation">,</span> y<span class="operator">=</span>mean_hwy<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_col<span class="punctuation">(</span><span class="punctuation">)</span><span class="comment"># 기본 정렬</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-8-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> drv_hwy<span class="punctuation">,</span> </span><br><span class="line">       aes<span class="punctuation">(</span>x<span class="operator">=</span>reorder<span class="punctuation">(</span>drv<span class="punctuation">,</span> mean_hwy<span class="punctuation">)</span><span class="punctuation">,</span> y<span class="operator">=</span>mean_hwy<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_col<span class="punctuation">(</span><span class="punctuation">)</span><span class="comment">#오름차순 정렬</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-8-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> drv_hwy<span class="punctuation">,</span> </span><br><span class="line">       aes<span class="punctuation">(</span>x<span class="operator">=</span>reorder<span class="punctuation">(</span>drv<span class="punctuation">,</span> <span class="operator">-</span>mean_hwy<span class="punctuation">)</span><span class="punctuation">,</span> y<span class="operator">=</span>mean_hwy<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_col<span class="punctuation">(</span><span class="punctuation">)</span><span class="comment">#내림차순 정렬</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-8-3.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> drv_hwy<span class="punctuation">,</span> </span><br><span class="line">       aes<span class="punctuation">(</span>x<span class="operator">=</span>reorder<span class="punctuation">(</span>drv<span class="punctuation">,</span> mean_hwy<span class="punctuation">)</span><span class="punctuation">,</span> y<span class="operator">=</span>mean_hwy<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_col<span class="punctuation">(</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  labs<span class="punctuation">(</span>title <span class="operator">=</span><span class="string">&quot;그래프 제목&quot;</span><span class="punctuation">,</span> </span><br><span class="line">       subtitle <span class="operator">=</span> <span class="string">&quot;그래프 소제목&quot;</span><span class="punctuation">,</span> </span><br><span class="line">       x<span class="operator">=</span><span class="string">&quot;x변수명 입력&quot;</span><span class="punctuation">,</span></span><br><span class="line">       y<span class="operator">=</span><span class="string">&quot;y변수명 입력&quot;</span><span class="punctuation">,</span></span><br><span class="line">       caption <span class="operator">=</span> <span class="string">&quot;데이터 출처 입력력&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0622/unnamed-chunk-9-1.png"><!-- --></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bennypark.github.io/2022/06/22/day220622_2/" data-id="cl4pb04r50000t8ua41mh2bfq" data-title="day220622_2" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/06/22/day220622/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">day0622</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/22/day220622_2/">day220622_2</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/22/day220622/">day0622</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/21/day220621/">day220621</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/21/day220621_2/">day220621_2</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/20/test/">데이터 불러오고 경로 찾기</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>day0622 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="7장 결측치, 이상처리 결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.결측치는 상황과 정도에 따라 분석 방법이 여러가지다.  결측치 처리 방법 2가지  첫번째:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day0622">
+<meta property="og:url" content="https://bennypark.github.io/2022/06/22/day220622/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="7장 결측치, 이상처리 결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.결측치는 상황과 정도에 따라 분석 방법이 여러가지다.  결측치 처리 방법 2가지  첫번째:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bennypark.github.io/day220622_files/figure-html/unnamed-chunk-12-1.png">
+<meta property="article:published_time" content="2022-06-22T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:54:52.469Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bennypark.github.io/day220622_files/figure-html/unnamed-chunk-12-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://BennyPark.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-day220622" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/22/day220622/" class="article-date">
+  <time class="dt-published" datetime="2022-06-22T00:00:00.000Z" itemprop="datePublished">2022-06-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      day0622
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>7장 결측치, 이상처리</p>
+<p>결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.<br>#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.<br>결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.<br>결측치는 상황과 정도에 따라 분석 방법이 여러가지다. </p>
+<p>결측치 처리 방법 2가지</p>
+<ul>
+<li>첫번째: 평균값을 넣었을 때, 예측 판매량</li>
+<li>두번째: 결측치를 제거할 때, 예측 판매량</li>
+</ul>
+<p>1)결측치를 확인하고 빈도 구하기<br>(1) 결측치를 확인: is.na()함수<br>##라이브러리 블러오기 </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>dplyr<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## 다음의 패키지를 부착합니다: &#x27;dplyr&#x27;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## The following objects are masked from &#x27;package:stats&#x27;:</span><br><span class="line">## </span><br><span class="line">##     filter, lag</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## The following objects are masked from &#x27;package:base&#x27;:</span><br><span class="line">## </span><br><span class="line">##     intersect, setdiff, setequal, union</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>#데이터 불러오기</p>
+<ul>
+<li>데이터를 불러오세요</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#코드청크</span></span><br><span class="line">exam_na <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;exam_na.csv&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="built_in">is.na</span><span class="punctuation">(</span>exam_na<span class="punctuation">)</span><span class="comment">#결측치 확인</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">##         id   sex korean english  math</span><br><span class="line">## [1,] FALSE FALSE  FALSE    TRUE FALSE</span><br><span class="line">## [2,] FALSE FALSE  FALSE   FALSE FALSE</span><br><span class="line">## [3,] FALSE FALSE  FALSE   FALSE FALSE</span><br><span class="line">## [4,] FALSE FALSE   TRUE   FALSE FALSE</span><br><span class="line">## [5,] FALSE FALSE  FALSE    TRUE FALSE</span><br></pre></td></tr></table></figure>
+
+<p>is.na()&#x3D; Is this yours? &#x2F; YES or NO</p>
+<p>##(2)결측치 빈도 구하기</p>
+<ul>
+<li>table():빈도구하기</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>exam_na<span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment">#데이터세트 전체의 결측치 빈도를 확인인</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## FALSE  TRUE </span><br><span class="line">##    22     3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>exam_na<span class="operator">$</span>korean<span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment">#kroean 변수의 결측치 빈도를 확인</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## FALSE  TRUE </span><br><span class="line">##     4     1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">summary<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>exam_na<span class="punctuation">)</span><span class="punctuation">)</span><span class="comment">#데이터세트의 전체 변수별로 결측치 빈도를 확인</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">##      id             sex            korean         english       </span><br><span class="line">##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  </span><br><span class="line">##  FALSE:5         FALSE:5         FALSE:4         FALSE:3        </span><br><span class="line">##                                  TRUE :1         TRUE :2        </span><br><span class="line">##     math        </span><br><span class="line">##  Mode :logical  </span><br><span class="line">##  FALSE:5        </span><br><span class="line">## </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">summary<span class="punctuation">(</span>exam_na<span class="punctuation">)</span><span class="comment">#데이터세트의 전체 변수</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">##        id        sex                korean         english           math     </span><br><span class="line">##  Min.   :1   Length:5           Min.   :87.00   Min.   :84.00   Min.   :80.0  </span><br><span class="line">##  1st Qu.:2   Class :character   1st Qu.:87.00   1st Qu.:88.00   1st Qu.:82.0  </span><br><span class="line">##  Median :3   Mode  :character   Median :89.50   Median :92.00   Median :88.0  </span><br><span class="line">##  Mean   :3                      Mean   :90.25   Mean   :90.33   Mean   :86.6  </span><br><span class="line">##  3rd Qu.:4                      3rd Qu.:92.75   3rd Qu.:93.50   3rd Qu.:90.0  </span><br><span class="line">##  Max.   :5                      Max.   :95.00   Max.   :95.00   Max.   :93.0  </span><br><span class="line">##                                 NA&#x27;s   :1       NA&#x27;s   :2</span><br></pre></td></tr></table></figure>
+
+<p>##결측치 처리 방법<br>-제거하고 처리하기</p>
+<ul>
+<li>다른 값으로 대체하기<br>+평균 입력</li>
+</ul>
+<p>###(1) 결측치를 제외하고 분석하기<br>na.rm &#x3D; T</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean<span class="punctuation">(</span>exam_na<span class="operator">$</span>korean<span class="punctuation">)</span> <span class="comment">#제외하기 전 </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] NA</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean<span class="punctuation">(</span>exam_na<span class="operator">$</span>korean<span class="punctuation">,</span> na.rm <span class="operator">=</span> <span class="built_in">T</span><span class="punctuation">)</span> <span class="comment">#제외 후 평균 값</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 90.25</span><br></pre></td></tr></table></figure>
+<p>###(2) 결측치가 있는는 행을 모두 제외하기: na.omit()</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">na.omit<span class="punctuation">(</span>exam_na<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">##   id sex korean english math</span><br><span class="line">## 2  2   F     92      95   93</span><br><span class="line">## 3  3   F     95      92   90</span><br></pre></td></tr></table></figure>
+<p>분석을 하기 위해서 쓰는 프로그램인데 이 함수를 사용할 시 설득력이 다소 많이 떨어 질 것 이다.</p>
+<p>###(3) filter()활용</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exam_na <span class="operator">%&gt;%</span> filter<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>korean<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##   id sex korean english math</span><br><span class="line">## 1  4   M     NA      84   80</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exam_na <span class="operator">%&gt;%</span> filter<span class="punctuation">(</span><span class="operator">!</span><span class="built_in">is.na</span><span class="punctuation">(</span>korean<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">##   id sex korean english math</span><br><span class="line">## 1  1   M     87      NA   82</span><br><span class="line">## 2  2   F     92      95   93</span><br><span class="line">## 3  3   F     95      92   90</span><br><span class="line">## 4  5   F     87      NA   88</span><br></pre></td></tr></table></figure>
+<p>‘!’ &#x3D; ‘아니다’<br>filter(!is.na()) &#x3D; 결측치가 아닌 행만 추출하라라</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exam_na <span class="operator">%&gt;%</span> filter<span class="punctuation">(</span><span class="operator">!</span><span class="built_in">is.na</span><span class="punctuation">(</span>korean<span class="punctuation">)</span><span class="operator">&amp;</span><span class="operator">!</span><span class="built_in">is.na</span><span class="punctuation">(</span>english<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">##   id sex korean english math</span><br><span class="line">## 1  2   F     92      95   93</span><br><span class="line">## 2  3   F     95      92   90</span><br></pre></td></tr></table></figure>
+<p>두개 조건을 만족하는 결과만 추출함함</p>
+<p>결측치를 다른 값으로 대체하기<br>ifelse(is.na(변수),대체값, 변수)</p>
+<ul>
+<li>만약~라면, 내가 무엇을 할 것이다.(가정법)<br>-만약 trans의 값이 3이라면, 결측치로 바꿔주세요. 나머지는 그대로 유지하세요.</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exam_na<span class="operator">$</span>korean <span class="comment">#korean성적에서 4번째가 na</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 87 92 95 NA 87</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean<span class="punctuation">(</span>exam_na<span class="operator">$</span>korean<span class="punctuation">,</span> na.rm <span class="operator">=</span> <span class="built_in">T</span><span class="punctuation">)</span> <span class="comment">#결측값을 제외한 값의 평균</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 90.25</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#결측값에 평균 입력</span></span><br><span class="line">exam_na<span class="operator">$</span>korean <span class="operator">&lt;-</span> ifelse<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>exam_na<span class="operator">$</span>korean<span class="punctuation">)</span><span class="punctuation">,</span> <span class="number">90.25</span><span class="punctuation">,</span> exam_na<span class="operator">$</span>korean<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">exam_na<span class="operator">$</span>korean</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 87.00 92.00 95.00 90.25 87.00</span><br></pre></td></tr></table></figure>
+
+<p>-imputation참고 자려 쓰기<br>  A Solution to Missing Data: Imputation Using R<br>  <a target="_blank" rel="noopener" href="https://www.kdnuggets.com/2017/09/missing-data-imputation-using-r.html">https://www.kdnuggets.com/2017/09/missing-data-imputation-using-r.html</a>)</p>
+<p>[R] 결측값(NA) 제거, 대체 방법:<br>  <a target="_blank" rel="noopener" href="https://velog.io/@lifeisbeautiful/R-%EA%B2%B0%EC%B8%A1%EA%B0%92NA-%EC%A0%9C%EA%B1%B0-%EB%8C%80%EC%B2%B4-%EB%B0%A9%EB%B2%95">https://velog.io/@lifeisbeautiful/R-%EA%B2%B0%EC%B8%A1%EA%B0%92NA-%EC%A0%9C%EA%B1%B0-%EB%8C%80%EC%B2%B4-%EB%B0%A9%EB%B2%95</a></p>
+<h2 id="이상치"><a href="#이상치" class="headerlink" title="이상치"></a>이상치</h2><ul>
+<li><p>데이터의 특정 값이 뭐가’이상’이 있다.</p>
+</li>
+<li><p>Case 1 : 정해진 범주에서 벗어난 데이터<br>  +2000년 4월 30일&#x2F; 2000년 40월 30일 —&gt; 9999</p>
+</li>
+<li><p>Case 2 : 숫자 &#x2F; 아웃라이어(outlier) &#x2F; 극단값<br> +평균 : 평균임금 320만원 &#x2F; 손흥민 몇십억원</p>
+</li>
+</ul>
+<p> 2)이상치 처리 :ifelse()로 수치를 변환</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mpg1_out <span class="operator">&lt;-</span>read.csv<span class="punctuation">(</span><span class="string">&quot;mpg1_out.csv&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">mpg1_out<span class="operator">$</span>trans <span class="operator">&lt;-</span>ifelse<span class="punctuation">(</span>mpg1_out<span class="operator">$</span>trans <span class="operator">==</span><span class="number">3</span> <span class="punctuation">,</span> <span class="literal">NA</span><span class="punctuation">,</span> mpg1_out<span class="operator">$</span>trans<span class="punctuation">)</span> <span class="comment"># mpg1_out %&gt;% filter(trans != 3)</span></span><br><span class="line">table<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>mpg1_out<span class="operator">$</span>trans<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## FALSE  TRUE </span><br><span class="line">##   230     4</span><br></pre></td></tr></table></figure>
+<p> -결측치 제거</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result <span class="operator">&lt;-</span> mpg1_out <span class="operator">%&gt;%</span> filter<span class="punctuation">(</span><span class="operator">!</span><span class="built_in">is.na</span><span class="punctuation">(</span>trans<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">table<span class="punctuation">(</span><span class="built_in">is.na</span><span class="punctuation">(</span>result<span class="operator">$</span>trans<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## FALSE </span><br><span class="line">##   230</span><br></pre></td></tr></table></figure>
+<p> ###극단치 처리</p>
+<ul>
+<li>숫자 데이터 boxplot()</li>
+<li>boxplot()함수를 통해서 극단치가 있는지 없는 확인 가능</li>
+<li>IQR: 3사분위~1사분위</li>
+<li>경계값: IQR+IQR<em>1.5상한 &#x2F; IQR - IQR</em>1.5 하한</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mpg1 <span class="operator">&lt;-</span>read.csv<span class="punctuation">(</span><span class="string">&quot;mpg1.csv&quot;</span><span class="punctuation">)</span></span><br><span class="line">boxplot<span class="punctuation">(</span>mpg1<span class="operator">$</span>cty<span class="punctuation">)</span></span><br><span class="line">boxplot<span class="punctuation">(</span>mpg1<span class="operator">$</span>cty<span class="punctuation">)</span><span class="operator">$</span>stats <span class="comment">#1개 변수의 통계값</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/day220622_files/figure-html/unnamed-chunk-12-1.png"><!-- --></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">##      [,1]</span><br><span class="line">## [1,]    9</span><br><span class="line">## [2,]   14</span><br><span class="line">## [3,]   17</span><br><span class="line">## [4,]   19</span><br><span class="line">## [5,]   26</span><br></pre></td></tr></table></figure>
+<p> 상위 경계값 위 동그라미가 극단치</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://bennypark.github.io/2022/06/22/day220622/" data-id="cl4pb04re0001t8uagyvgdl9v" data-title="day0622" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/06/22/day220622_2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          day220622_2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/21/day220621/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">day220621</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/22/day220622_2/">day220622_2</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/22/day220622/">day0622</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/21/day220621/">day220621</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/21/day220621_2/">day220621_2</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/20/test/">데이터 불러오고 경로 찾기</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

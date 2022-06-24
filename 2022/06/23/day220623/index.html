@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="John Doe">
+
+
+
+
+
+
+
+<title>day220623 | Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            Frame.
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+        </div>
+        <div class="post-title">
+            
+            
+                day220623
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 23, 2022
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h2 id="복습"><a href="#복습" class="headerlink" title="복습"></a>복습</h2><p>iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.<br>-제목과 x축, y축 제목을 변경하세요.<br> +x축 길이, y축 너비</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">str<span class="punctuation">(</span>iris<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## &#x27;data.frame&#x27;:	150 obs. of  5 variables:</span><br><span class="line">##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span><br><span class="line">##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span><br><span class="line">##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span><br><span class="line">##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span><br><span class="line">##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>iris<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> Sepal.Length<span class="punctuation">,</span> y<span class="operator">=</span>Sepal.Width<span class="punctuation">,</span> colour<span class="operator">=</span> Species<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  labs<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;길이와 너비&quot;</span><span class="punctuation">,</span> </span><br><span class="line">        x<span class="operator">=</span><span class="string">&quot;길이&quot;</span><span class="punctuation">,</span></span><br><span class="line">       y<span class="operator">=</span><span class="string">&quot;너비&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0623/unnamed-chunk-1-1.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>iris<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> Sepal.Length<span class="punctuation">,</span> y<span class="operator">=</span>Sepal.Width<span class="punctuation">,</span> colour<span class="operator">=</span> Species<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span> </span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  labs<span class="punctuation">(</span>title<span class="operator">=</span><span class="string">&quot;길이와 너비&quot;</span><span class="punctuation">,</span> </span><br><span class="line">        x<span class="operator">=</span><span class="string">&quot;길이&quot;</span><span class="punctuation">,</span></span><br><span class="line">       y<span class="operator">=</span><span class="string">&quot;너비&quot;</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  scale_color_manual<span class="punctuation">(</span></span><br><span class="line">    labels<span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;setosa&quot;</span><span class="punctuation">,</span> <span class="string">&quot;versicolor&quot;</span><span class="punctuation">,</span> <span class="string">&quot;virginica&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    values<span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;orange&quot;</span><span class="punctuation">,</span><span class="string">&quot;blue&quot;</span><span class="punctuation">,</span> <span class="string">&quot;yellow&quot;</span><span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0623/unnamed-chunk-1-2.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>economics<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span> pce<span class="punctuation">,</span> y<span class="operator">=</span>pop<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span>geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/rmd_0623/unnamed-chunk-1-3.png"><!-- --></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str<span class="punctuation">(</span>economics<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">## spec_tbl_df [574 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)</span><br><span class="line">##  $ date    : Date[1:574], format: &quot;1967-07-01&quot; &quot;1967-08-01&quot; ...</span><br><span class="line">##  $ pce     : num [1:574] 507 510 516 512 517 ...</span><br><span class="line">##  $ pop     : num [1:574] 198712 198911 199113 199311 199498 ...</span><br><span class="line">##  $ psavert : num [1:574] 12.6 12.6 11.9 12.9 12.8 11.8 11.7 12.3 11.7 12.3 ...</span><br><span class="line">##  $ uempmed : num [1:574] 4.5 4.7 4.6 4.9 4.7 4.8 5.1 4.5 4.1 4.6 ...</span><br><span class="line">##  $ unemploy: num [1:574] 2944 2945 2958 3143 3066 ...</span><br></pre></td></tr></table></figure>
+<p>제 8장<br>통계(statistics): 수량 데이터에서 다양한 방법으로 새로운 사실들을 찾아내는 학문</p>
+<p>1)기술통계<br>기술통계(descriptive statistics): 평균, 최솟값, 최댓값, 중앙값과 같은 데이터의 특징을 알려주는 값들</p>
+<p>2)추론통계<br>추론통계(inferential statistics): 변수 간의 관계를 파악하고, 이를 토대로 변수 간의 인과관계나 새로운 사실들을 밝혀내는 것<br>(1)평균 차이 검정: 집단별로 평균의 차이가 실제로 있는가를 검정하는 것.<br>예) 고등학교 3학년 국어 점수가 남학생 평균:82.1, 여학생 평균 82.3점. 남여학생의 점수차는 0.2점이다. 위 내용은 단순히 “이번 국어시험 점수가 여학생이 남학생보다 0.2점 높다.”는 결론을 통계적으로 검점해야 한다.</p>
+<p>(2)교차분석(&#x3D;빈도분석): 범주형 변수로 구성된 집단들의 관련성을 검정하는 통계 분석.</p>
+<p>(“카이제곱 검정, 카이스퀘어검정, 독립성 검정”이라고도 함)</p>
+<p>교차분석 결과는 관계가 있다, 없다 등2가지입니다.</p>
+<p>예)두개의 ‘소형 50세대와 대형 50세대’가 있는 아파트 2개 단지의 대소형 TV 소유 현황을 조사했다.<br>1번 단지는 대형 TV 90개, 소형TV 10개 &#x3D;&gt; 아파트 크기와 TV크기는 관계 없음<br>2번 단지는 대형 TV 55개, 소형TV 45개 &#x3D;&gt; 아파트 크기와 TV크기는 관계가 있다.</p>
+<p>(3)상관관계분석: 변수 간의 상관관계(correlation)를 알아 보는 것.<br>관계의 경우의 수는 -1&lt;&#x3D;r&lt;&#x3D;1 |<br>     높은 관계(+-0.7 이상), 다소 높은 관계(+-0.4<del>+-0.7),<br>     낮은 관계(+-0.2</del>+-0.4), 관계 거의 없음(+-0.2 미만)<br>음의 상관관계: &#96;<br>양의 상관관계: 우상향</p>
+<p>(4)회귀분석: 독립변수와 종속변수간의 인과관계를 분석하는 것<br>독립변수(independent variable):영향을 주는 변수<br>종속변수(dependent variable): 영향을 받는 변수<br>예)”월급이 증가하면 외식횟수가 늘어날 것”<br>“월급”-&gt; 독립변수, “외식횟수” -&gt; 종속변수<br>즉 월급의 증감이 외식횟수에 미치는 영향을 확률적으로 분석하는 것이 회귀 분석이다.</p>
+<ol start="2">
+<li>통계 검정</li>
+</ol>
+<ol>
+<li>가설(hypothesis):어떤 현상을 설명하기 위해서 가정하는 명제, 증명되지 않은 추정.<br>귀무가설(歸無假說):설정한 가설이 맞을 확률이 극히 적어서 처음부터 기각될 것으로 예상되는 가설</li>
+</ol>
+<h1 id="두-그룹-간의-평균차이가-없다"><a href="#두-그룹-간의-평균차이가-없다" class="headerlink" title="두 그룹 간의 평균차이가 없다"></a>두 그룹 간의 평균차이가 없다</h1><p>대립가설(對立假說):귀무가설이 기각될 경우 받아들여지는 가설 | 연구자가 검정하고자 하는 가설</p>
+<h1 id="두-그룹간의-평균차이가-있다"><a href="#두-그룹간의-평균차이가-있다" class="headerlink" title="두 그룹간의 평균차이가 있다"></a>두 그룹간의 평균차이가 있다</h1><ul>
+<li><p>hypothesis</p>
+</li>
+<li><p>연구 : 내가 궁금한 것을 찾는 것</p>
+</li>
+<li><p>남자와 여자가 키가 동일하다는 것?</p>
+</li>
+<li><p>가설검정에서 인정하는 유의 수준</p>
+</li>
+</ul>
+<ul>
+<li>5%, 1%, 0.1% 또는 10%<br>-오차범위 내에 있느냐? 밖에 있는냐?</li>
+</ul>
+<ul>
+<li>A후보의 44%, B후보의 42%</li>
+</ul>
+<p>유의수준 &gt; 0.05<br>  3 통계 분석 사례</p>
+<ul>
+<li>남녀 등 두 집단의 평균 차이를 분석할 때는 독립표본 t검정을 한다. t.test() 사용.</li>
+</ul>
+<h1 id="방법1-t-test-data-x3D-데이터세트-종속변수-비교값-독립변수-비교대상"><a href="#방법1-t-test-data-x3D-데이터세트-종속변수-비교값-독립변수-비교대상" class="headerlink" title="방법1 t.test(data&#x3D;데이터세트, 종속변수(비교값) ~ 독립변수(비교대상))"></a>방법1 t.test(data&#x3D;데이터세트, 종속변수(비교값) ~ 독립변수(비교대상))</h1><h1 id="방법2-t-test-데이터세트-종속변수-비교값-데이터세트-독립변수-비교대상"><a href="#방법2-t-test-데이터세트-종속변수-비교값-데이터세트-독립변수-비교대상" class="headerlink" title="방법2 t.test(데이터세트$종속변수(비교값) ~ 데이터세트$독립변수(비교대상))"></a>방법2 t.test(데이터세트$종속변수(비교값) ~ 데이터세트$독립변수(비교대상))</h1><p>예제) mpg1.csv의 trans 변수는 기어변속방법으로 auto(자동식)와 manual(수동식)가 있다. 두방식에 따라 cty평균이 통게적으로 유의미한 차이가 있는지 알아보자.<br> %cty: 도시에서 1갤런당 달리는 거리.<br>    독립변수는 trans, 종속변수는 cty</p>
+<p>t.test </p>
+<ul>
+<li>어떻게 데이터를 입력하는지 확인</li>
+<li>p-value, 유의수준 0.05 이상: 귀무가설 | 0.05이내: 대립가설</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpg1 <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;mpg1.csv&quot;</span><span class="punctuation">,</span> stringsAsFactors <span class="operator">=</span> <span class="built_in">F</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>t.test검정</li>
+</ul>
+<ul>
+<li>귀무가설 : auto 와 manual 의 cty평균은 차이가 없다</li>
+<li>대립가설 : auto 와 manual 의 cty평균은 차이가 있다.</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t.test<span class="punctuation">(</span>data <span class="operator">=</span> mpg1<span class="punctuation">,</span> cty <span class="operator">~</span>trans<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## 	Welch Two Sample t-test</span><br><span class="line">## </span><br><span class="line">## data:  cty by trans</span><br><span class="line">## t = -4.5375, df = 132.32, p-value = 1.263e-05</span><br><span class="line">## alternative hypothesis: true difference in means between group auto and group manual is not equal to 0</span><br><span class="line">## 95 percent confidence interval:</span><br><span class="line">##  -3.887311 -1.527033</span><br><span class="line">## sample estimates:</span><br><span class="line">##   mean in group auto mean in group manual </span><br><span class="line">##             15.96815             18.67532</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#종속변수(y값) ~ 독립변수(x값) </span></span><br><span class="line"><span class="comment">#반응변수 ~ 설명변수수</span></span><br></pre></td></tr></table></figure>
+<h2 id="p-value-x3D-유의수준-‘e-n’은-‘10의-n승분의-1-1-x2F-10-n-’이며-‘e-n’은-‘10의-n승-10-n-’을-의미한다"><a href="#p-value-x3D-유의수준-‘e-n’은-‘10의-n승분의-1-1-x2F-10-n-’이며-‘e-n’은-‘10의-n승-10-n-’을-의미한다" class="headerlink" title="p-value &#x3D;유의수준 : ‘e-n’은 ‘10의 n승분의 1(1&#x2F;10^n)’이며, ‘e+n’은 ‘10의 n승(10^n)’을 의미한다."></a>p-value &#x3D;유의수준 : ‘e-n’은 ‘10의 n승분의 1(1&#x2F;10^n)’이며, ‘e+n’은 ‘10의 n승(10^n)’을 의미한다.</h2><p>1.263e-05&#x3D; 1.263&#x2F;100000</p>
+<h2 id="auto는-15-96815-manual은-18-67532"><a href="#auto는-15-96815-manual은-18-67532" class="headerlink" title="auto는 15.96815, manual은  18.67532"></a>auto는 15.96815, manual은  18.67532</h2><p>이 검정의 결과로 auto와 manual의 평균은 차이가 있다. 대립가설을 채택할 수 있다.</p>
+<h1 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h1><ul>
+<li>cty평균거리는 자동식이 15.97마일, 수동식이 18.68마일이다. 유의수준(p)이 0.05보다 작아서 통계적으로 유의미한 차이가 있기 때문에 수동식의 평균이 자동시의 평균보다 약 2.7마일 길다고 할 수 있다.</li>
+</ul>
+<ul>
+<li><p>주의사항 : 추론식이기에 ‘길다’라는 확정적인 표현 보다는 ‘길다고 할 수 있다’라고 추론식으로 쓰는 것이 좋다.  + 만약 p-value가 .05보다 크면 “유의수준이 0.05 보다 크기 때문에 자동식과 수동식의 평균은 통계적으로 유의미한 차이가 없다”라고 쓰면된다.<br> -두 그룹의 평균 차이검정</p>
+</li>
+<li><p>사전 필수 검증</p>
+</li>
+<li><p>등분산 검정정</p>
+<ul>
+<li>두 그룹간의 분산이 비슷하면 -&gt; t.test(모수검정<br>)</li>
+<li>두 그룹간의 분신이 다르다면-&gt; 비모수 검정</li>
+<li>귀무가설 : 두그룹간의 분이 비슷하다.<br>대립가설: 두그룹간의 분산이 다름.</li>
+</ul>
+</li>
+</ul>
+<h3 id="교차-분석"><a href="#교차-분석" class="headerlink" title="교차 분석"></a>교차 분석</h3><ul>
+<li>범주형 변수들이 관계가 있다는 것을 검정</li>
+<li>비율에 차이가 있는지 검정</li>
+<li>교차 분석 검정은 r의 chisq.test()함수로 진행</li>
+<li>귀무가설 : trans에 따라 drv(4,f,r)의 차이가 없다.</li>
+<li>대립가설 : trans에 따라 drv의 차이가 있다.</li>
+<li>빈도표 &#x2F; 비율</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table<span class="punctuation">(</span>mpg1<span class="operator">$</span>trans<span class="punctuation">,</span> mpg1<span class="operator">$</span>drv<span class="punctuation">)</span> <span class="comment">#교차 분석</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">##         </span><br><span class="line">##           4  f  r</span><br><span class="line">##   auto   75 65 17</span><br><span class="line">##   manual 28 41  8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>비율</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prop.table<span class="punctuation">(</span>table<span class="punctuation">(</span>mpg1<span class="operator">$</span>trans<span class="punctuation">,</span> mpg1<span class="operator">$</span>drv<span class="punctuation">)</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">##         </span><br><span class="line">##                  4         f         r</span><br><span class="line">##   auto   0.4777070 0.4140127 0.1082803</span><br><span class="line">##   manual 0.3636364 0.5324675 0.1038961</span><br></pre></td></tr></table></figure>
+<ul>
+<li>auto 4륜 구동(4)인 47.8%</li>
+<li>manual 전륜 구동(f) 54.2% 가장 많음</li>
+<li>실제로 통계적으로 봤을 때, 차이가 있는지 검정</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chisq.test<span class="punctuation">(</span>mpg1<span class="operator">$</span>trans<span class="punctuation">,</span> mpg1<span class="operator">$</span>drv<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## 	Pearson&#x27;s Chi-squared test</span><br><span class="line">## </span><br><span class="line">## data:  mpg1$trans and mpg1$drv</span><br><span class="line">## X-squared = 3.1368, df = 2, p-value = 0.2084</span><br></pre></td></tr></table></figure>
+<p>눈에 보이는 수치로만 통계를 믿지 말고 유의수준</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2022/06/24/day220624/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2022/06/22/day220622_2/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+  </body>
+</html>

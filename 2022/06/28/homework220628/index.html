@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="John Doe">
+
+
+
+
+
+
+
+<title>Hexo</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            Frame.
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+        </div>
+        <div class="post-title">
+            
+            
+                *Untitled
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 28, 2022
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>(): <span class="comment">#hello 함수를 만듦</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;hello, world!&quot;</span>) </span><br><span class="line">hello()</span><br></pre></td></tr></table></figure>
+
+<pre><code>hello, world!
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">  <span class="keyword">pass</span> <span class="comment">#빈함수 만들기</span></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a,b</span>):</span><br><span class="line">  <span class="string">&quot;&quot;&quot; 이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수다. &quot;&quot;&quot;</span></span><br><span class="line">  <span class="built_in">print</span>(a+b)</span><br><span class="line">add(<span class="number">10</span>,<span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>30
+30
+ 이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수다. 
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a,b</span>):</span><br><span class="line">  <span class="string">&quot;&quot;&quot; 이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수다. &quot;&quot;&quot;</span></span><br><span class="line">  <span class="keyword">return</span> a+b</span><br><span class="line"></span><br><span class="line">x=add(<span class="number">5</span>,<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add.__doc__)</span><br></pre></td></tr></table></figure>
+
+<pre><code> 이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수다. 
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a,b</span>):</span><br><span class="line">  <span class="keyword">return</span> a+b</span><br><span class="line">x=add(<span class="number">4</span>,<span class="number">6</span>)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>10
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">one</span>():</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">x= one()</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>1
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">not_ten</span>(<span class="params">a</span>):</span><br><span class="line">  <span class="keyword">if</span> a == <span class="number">10</span>:</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  <span class="built_in">print</span>(a,<span class="string">&quot;입니다.&quot;</span>, sep=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">not_ten(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>5입니다.
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add_sub</span>(<span class="params">a,b</span>):</span><br><span class="line">  <span class="keyword">return</span> a+b, a-b</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot; add_sub는 더하기와 빼기의 값이 동시에 출력된다. &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">x, y = add_sub(<span class="number">10</span>,<span class="number">20</span>) <span class="comment">#결과값을 x와 y에 저장합니다. </span></span><br><span class="line"><span class="built_in">print</span>(x) </span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+<pre><code>30
+-10
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">one_two</span>():</span><br><span class="line">  <span class="keyword">return</span>(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="number">1</span>,<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>(1, 2)
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">one_two</span>():</span><br><span class="line">  <span class="keyword">return</span> [<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">x,y= one_two()</span><br><span class="line"><span class="built_in">print</span>(x, y)</span><br></pre></td></tr></table></figure>
+
+<pre><code>1 2
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mul</span>(<span class="params">a,b</span>):</span><br><span class="line">  c= a*b</span><br><span class="line">  <span class="keyword">return</span> c</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a,b</span>):</span><br><span class="line">  c= a+b</span><br><span class="line">  <span class="built_in">print</span>(c)</span><br><span class="line">  d=mul(a,b)</span><br><span class="line">  <span class="built_in">print</span>(d)</span><br><span class="line"></span><br><span class="line">x=<span class="number">10</span></span><br><span class="line">y=<span class="number">20</span></span><br><span class="line">add(x,y)</span><br></pre></td></tr></table></figure>
+
+<pre><code>200
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_num</span>(<span class="params">a,b,c</span>):</span><br><span class="line">  <span class="built_in">print</span>(a)</span><br><span class="line">  <span class="built_in">print</span>(b)</span><br><span class="line">  <span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line">print_num(<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line">x = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>] </span><br><span class="line"></span><br><span class="line">print_num(*x) <span class="comment">#리스트(튜플) 앞에 *를 붙이면 언패킹(unpacking)</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>10
+20
+30
+10
+20
+30
+</code></pre>
+<h2 id="참조"><a href="#참조" class="headerlink" title="참조"></a>참조</h2><ul>
+<li>파이썬 코딩도장, 29.1 Hello, world! 출력 함수 만들기 <ul>
+<li>주소 : <a target="_blank" rel="noopener" href="https://dojang.io/mod/page/view.php?id=2337">https://dojang.io/mod/page/view.php?id=2337</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2022/06/24/day220624/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+  </body>
+</html>

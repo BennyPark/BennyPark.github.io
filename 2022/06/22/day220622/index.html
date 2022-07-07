@@ -1,132 +1,283 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+    
+<head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>day0622 - Hexo</title>
     <meta name="author" content="John Doe">
-
-
-
-
-
-
-
-<title>day0622 | Hexo</title>
-
-
-
-    <link rel="icon" href="/favicon.ico">
-
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
-
-
-
-    <!-- stylesheets list from _config.yml -->
     
-    <link rel="stylesheet" href="/css/style.css">
     
-
-
-
-
-    <!-- scripts list from _config.yml -->
     
-    <script src="/js/frame.js"></script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"articleBody":"7장 결측치, 이상처리\n결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.결측치는 상황과 정도에 따라 분석 방법이 여러가지다. \n결측치 처리 방법 2가지\n\n첫번째: 평균값을 넣었을 때, 예측 판매량\n두번째: 결측치를 제거할 때, 예측 판매량\n\n1)결측치를 확인하고 빈도 구하기(1) 결측치를 확인: is.na()함수##라이브러리 블러오기 \n1library(dplyr)\n\n12## ## 다음의 패키지를 부착합니다: &#x27;dplyr&#x27;\n\n123## The following objects are masked from &#x27;package:stats&#x27;:## ##     filter, lag\n\n123## The following objects are masked from &#x27;package:base&#x27;:## ##     intersect, setdiff, setequal, union\n\n1library(ggplot2)\n\n#데이터 불러오기\n\n데이터를 불러오세요\n\n123#코드청크exam_na &lt;- read.csv(&quot;exam_na.csv&quot;)is.na(exam_na)#결측치 확인\n\n123456##         id   sex korean english  math## [1,] FALSE FALSE  FALSE    TRUE FALSE## [2,] FALSE FALSE  FALSE   FALSE FALSE## [3,] FALSE FALSE  FALSE   FALSE FALSE## [4,] FALSE FALSE   TRUE   FALSE FALSE## [5,] FALSE FALSE  FALSE    TRUE FALSE\n\nis.na()&#x3D; Is this yours? &#x2F; YES or NO\n##(2)결측치 빈도 구하기\n\ntable():빈도구하기\n\n1table(is.na(exam_na)) #데이터세트 전체의 결측치 빈도를 확인인\n\n123## ## FALSE  TRUE ##    22     3\n\n1table(is.na(exam_na$korean)) #kroean 변수의 결측치 빈도를 확인\n\n123## ## FALSE  TRUE ##     4     1\n\n1summary(is.na(exam_na))#데이터세트의 전체 변수별로 결측치 빈도를 확인\n\n12345678##      id             sex            korean         english       ##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  ##  FALSE:5         FALSE:5         FALSE:4         FALSE:3        ##                                  TRUE :1         TRUE :2        ##     math        ##  Mode :logical  ##  FALSE:5        ## \n\n1summary(exam_na)#데이터세트의 전체 변수\n\n12345678##        id        sex                korean         english           math     ##  Min.   :1   Length:5           Min.   :87.00   Min.   :84.00   Min.   :80.0  ##  1st Qu.:2   Class :character   1st Qu.:87.00   1st Qu.:88.00   1st Qu.:82.0  ##  Median :3   Mode  :character   Median :89.50   Median :92.00   Median :88.0  ##  Mean   :3                      Mean   :90.25   Mean   :90.33   Mean   :86.6  ##  3rd Qu.:4                      3rd Qu.:92.75   3rd Qu.:93.50   3rd Qu.:90.0  ##  Max.   :5                      Max.   :95.00   Max.   :95.00   Max.   :93.0  ##                                 NA&#x27;s   :1       NA&#x27;s   :2\n\n##결측치 처리 방법-제거하고 처리하기\n\n다른 값으로 대체하기+평균 입력\n\n###(1) 결측치를 제외하고 분석하기na.rm &#x3D; T\n1mean(exam_na$korean) #제외하기 전 \n\n1## [1] NA\n\n1mean(exam_na$korean, na.rm = T) #제외 후 평균 값\n\n1## [1] 90.25\n###(2) 결측치가 있는는 행을 모두 제외하기: na.omit()\n1na.omit(exam_na)\n\n123##   id sex korean english math## 2  2   F     92      95   93## 3  3   F     95      92   90\n분석을 하기 위해서 쓰는 프로그램인데 이 함수를 사용할 시 설득력이 다소 많이 떨어 질 것 이다.\n###(3) filter()활용\n1exam_na %&gt;% filter(is.na(korean))\n\n12##   id sex korean english math## 1  4   M     NA      84   80\n\n\n1exam_na %&gt;% filter(!is.na(korean))\n\n12345##   id sex korean english math## 1  1   M     87      NA   82## 2  2   F     92      95   93## 3  3   F     95      92   90## 4  5   F     87      NA   88\n‘!’ &#x3D; ‘아니다’filter(!is.na()) &#x3D; 결측치가 아닌 행만 추출하라라\n1exam_na %&gt;% filter(!is.na(korean)&amp;!is.na(english))\n\n123##   id sex korean english math## 1  2   F     92      95   93## 2  3   F     95      92   90\n두개 조건을 만족하는 결과만 추출함함\n결측치를 다른 값으로 대체하기ifelse(is.na(변수),대체값, 변수)\n\n만약~라면, 내가 무엇을 할 것이다.(가정법)-만약 trans의 값이 3이라면, 결측치로 바꿔주세요. 나머지는 그대로 유지하세요.\n\n1exam_na$korean #korean성적에서 4번째가 na\n\n1## [1] 87 92 95 NA 87\n\n1mean(exam_na$korean, na.rm = T) #결측값을 제외한 값의 평균\n\n1## [1] 90.25\n\n1234#결측값에 평균 입력exam_na$korean &lt;- ifelse(is.na(exam_na$korean), 90.25, exam_na$korean)exam_na$korean\n\n1## [1] 87.00 92.00 95.00 90.25 87.00\n\n-imputation참고 자려 쓰기  A Solution to Missing Data: Imputation Using R  https://www.kdnuggets.com/2017/09/missing-data-imputation-using-r.html)\n[R] 결측값(NA) 제거, 대체 방법:  https://velog.io/@lifeisbeautiful/R-%EA%B2%B0%EC%B8%A1%EA%B0%92NA-%EC%A0%9C%EA%B1%B0-%EB%8C%80%EC%B2%B4-%EB%B0%A9%EB%B2%95\n이상치\n데이터의 특정 값이 뭐가’이상’이 있다.\n\nCase 1 : 정해진 범주에서 벗어난 데이터  +2000년 4월 30일&#x2F; 2000년 40월 30일 —&gt; 9999\n\nCase 2 : 숫자 &#x2F; 아웃라이어(outlier) &#x2F; 극단값 +평균 : 평균임금 320만원 &#x2F; 손흥민 몇십억원\n\n\n 2)이상치 처리 :ifelse()로 수치를 변환\n1234mpg1_out &lt;-read.csv(&quot;mpg1_out.csv&quot;)mpg1_out$trans &lt;-ifelse(mpg1_out$trans ==3 , NA, mpg1_out$trans) # mpg1_out %&gt;% filter(trans != 3)table(is.na(mpg1_out$trans))\n\n123## ## FALSE  TRUE ##   230     4\n -결측치 제거\n12result &lt;- mpg1_out %&gt;% filter(!is.na(trans))table(is.na(result$trans))\n\n123## ## FALSE ##   230\n ###극단치 처리\n\n숫자 데이터 boxplot()\nboxplot()함수를 통해서 극단치가 있는지 없는 확인 가능\nIQR: 3사분위~1사분위\n경계값: IQR+IQR1.5상한 &#x2F; IQR - IQR1.5 하한\n\n123mpg1 &lt;-read.csv(&quot;mpg1.csv&quot;)boxplot(mpg1$cty)boxplot(mpg1$cty)$stats #1개 변수의 통계값\n\n\n123456##      [,1]## [1,]    9## [2,]   14## [3,]   17## [4,]   19## [5,]   26\n 상위 경계값 위 동그라미가 극단치\n","dateCreated":"2022-06-22T09:00:00+09:00","dateModified":"2022-06-22T16:54:52+09:00","datePublished":"2022-06-22T09:00:00+09:00","description":"","headline":"day0622","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://bennypark.github.io/2022/06/22/day220622/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"url":"https://bennypark.github.io/2022/06/22/day220622/"}</script>
+    <meta name="description" content="7장 결측치, 이상처리 결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.결측치는 상황과 정도에 따라 분석 방법이 여러가지다.  결측치 처리 방법 2가지  첫번째:">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="day0622">
+<meta property="og:url" content="https://bennypark.github.io/2022/06/22/day220622/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="7장 결측치, 이상처리 결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.결측치는 상황과 정도에 따라 분석 방법이 여러가지다.  결측치 처리 방법 2가지  첫번째:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bennypark.github.io/day220622_files/figure-html/unnamed-chunk-12-1.png">
+<meta property="article:published_time" content="2022-06-22T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T07:54:52.469Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bennypark.github.io/day220622_files/figure-html/unnamed-chunk-12-1.png">
     
-
-
-
-
-
-
-
-
-
-
-  <meta name="generator" content="Hexo 6.2.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
-    <div class="wrapper">
-
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
-          
-            Frame.
-          
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
-          
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
-          
-        </ul>
-      </nav>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main">
-        <div class="flex-container">
-          <article id="post">
-
-  
-    <div class="post-head">
-    <div class="post-info">
-        <div class="tag-list">
-            
-        </div>
-        <div class="post-title">
-            
-            
-                day0622
-            
-            
-        </div>
-        <span class="post-date">
-            Jun 22, 2022
-        </span>
-    </div>
-    <div class="post-img">
+    
         
-            <div class="h-line-primary"></div>
-              
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-arrkiiau2acevix01ksbscircv21bfs3axzlz4bngbpri5k6aooxfosdkoho.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hexo
+        </a>
     </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            day0622
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-06-22T09:00:00+09:00">
+	
+		    Jun 22, 2022
+    	
+    </time>
+    
 </div>
-    <div class="post-content">
-    <p>7장 결측치, 이상처리</p>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>7장 결측치, 이상처리</p>
 <p>결측치: 숫자(데이터: 문자 등도 포함)0이 아니라 데이터가 비어 있는 경우.<br>#주의: 결측치가 95%인데 나머지 5%의 데이터로 분석을하면 심각한 왜곡이됨니다.<br>결측치가 심하게 많으면 분석을 하지 말아야하지만, 적으면 제외하고 분석할 수 있습니다.<br>결측치는 상황과 정도에 따라 분석 방법이 여러가지다. </p>
 <p>결측치 처리 방법 2가지</p>
 <ul>
@@ -251,62 +402,317 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">##      [,1]</span><br><span class="line">## [1,]    9</span><br><span class="line">## [2,]   14</span><br><span class="line">## [3,]   17</span><br><span class="line">## [4,]   19</span><br><span class="line">## [5,]   26</span><br></pre></td></tr></table></figure>
 <p> 상위 경계값 위 동그라미가 극단치</p>
 
-</div> 
-
-<script>
-    window.onload = detectors();
-</script>
-    <div class="post-footer">
-    <div class="h-line-primary"></div>
-    <nav class="post-nav">
-        <div class="prev-item">
-           
-                <div class="icon arrow-left"></div>
-                <div class="post-link">
-                    <a href="/2022/06/22/day220622_2/">Prev</a>
-                </div>
             
+
+
         </div>
-        <div class="next-item">
-            
-                <div class="icon arrow-right"></div>
-                <div class="post-link">
-                  <a href="/2022/06/21/day220621/">Next</a>  
-                </div>  
-            
-        </div>
-    </nav>
-</div>
-
-    
-      <div class="post-comment">
-
-     
-
-     
-    
-    
-
-</div>
-     
-  
-</article>
-        </div>
-      </div>
-      
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
                 
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/22/day220622_2/"
+                    data-tooltip="day220622_2"
+                    aria-label="PREVIOUS: day220622_2"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/21/day220621/"
+                    data-tooltip="day220621"
+                    aria-label="NEXT: day220621"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2022 John Doe. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/22/day220622_2/"
+                    data-tooltip="day220622_2"
+                    aria-label="PREVIOUS: day220622_2"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/21/day220621/"
+                    data-tooltip="day220621"
+                    aria-label="NEXT: day220621"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/22/day220622/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/22/day220622/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/22/day220622/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/22/day220622/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
         </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">John Doe</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
     </div>
 </div>
 
-    </div>
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
 
-  </body>
+<script src="/assets/js/script-xqxwkjd9me9m1n2ncobjfy2gql5z1zrgtqk8d9bxhhz5jew6nnzr8feahrfi.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

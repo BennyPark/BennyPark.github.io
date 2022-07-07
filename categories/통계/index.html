@@ -6,21 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hexo">
-    <title>day220624 - Hexo</title>
+    <title>Category: 통계 - Hexo</title>
     <meta name="author" content="John Doe">
     
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"articleBody":"복습\n통계 검정\n\n평균 차이 검정 : 수치데이터 + 번주 데이터(두 그룹)\n\n중급 이상 : 세 그룹 이상\n\n\n비율 차이 검정 : 번주 데이터\n\n상관 관계 : 수치 데이터\n\n회귀 \n\n분석을 위한 데이터가 적절한지 검정\n\n등분산 검정, 수치 데이터가 정규분포를 이루는가(정규성 검정)\n\n\n\n\n귀무가설, 대립가설 적절하게 설정\n\n\n\n서울의 평균 임금과 부산의 평균 임금에 차이가 있을 것이다. \n선행연구(논문 찾아서)\n\n\n테스트\n\n\nt.test, chisq.test, cor.test\np.value\n\n\np.value &gt; 0.05 –&gt; 귀무가설 지지\np.value &lt; 0.05 –&gt; 대립가설 지지\n\n회귀의 중요성\n기초통계 : 특정한 결과에 영향을 주는 주 요인이 뭐냐? 이걸 찾는 회귀\n회귀분석과 종류\n\n\n1세대 회귀 방법론 : 다항회귀분석, 다중회귀분석, 포아송회귀분석, etc\n2세대 회귀 방법론 : 구조방정식\n\n\n귀무가설 &amp; 대립가설 존재\n\n\n귀무가설 : x(&#x3D;독립변수)가 y(&#x3D;종속변수)에 영향을 주지 않는다.\n대립가설 : x가 y에 영향을 준다.\n\n\nlm(종속변수 ~ 독립변수, data)\n\n\np.value\n\n12RA &lt;- lm(data=mtcars, mpg~disp)summary(RA) \n\n123456789101112131415161718## ## Call:## lm(formula = mpg ~ disp, data = mtcars)## ## Residuals:##     Min      1Q  Median      3Q     Max ## -4.8922 -2.2022 -0.9631  1.6272  7.2305 ## ## Coefficients:##              Estimate Std. Error t value Pr(&gt;|t|)    ## (Intercept) 29.599855   1.229720  24.070  &lt; 2e-16 ***## disp        -0.041215   0.004712  -8.747 9.38e-10 ***## ---## Signif. codes:  0 &#x27;***&#x27; 0.001 &#x27;**&#x27; 0.01 &#x27;*&#x27; 0.05 &#x27;.&#x27; 0.1 &#x27; &#x27; 1## ## Residual standard error: 3.251 on 30 degrees of freedom## Multiple R-squared:  0.7183,\tAdjusted R-squared:  0.709 ## F-statistic: 76.51 on 1 and 30 DF,  p-value: 9.38e-10\n\np-value : 0.05보다 크면 문제가 있다는 것을 나타낸다.\n(Intercept) &#x3D; 기울기\n전진소거법, 후진소거법\n\n\ny &#x3D; disp + var1\ny &#x3D; disp + var1 + var2 \ny &#x3D; disp + var1 + var2 +var3\n\n\n위 y값 중 제일 좋은 값을 선택하여 비교분석해야된다. y(mpg) &#x3D; 29.599855 - 0.041215\n\n머신러닝, 인공지능\n\n\n\n주 목적은 예측\ny &#x3D; ax + b\n\n\n\n\nResidual standard error: 3.251 on 30 degrees of freedomMultiple R-squared (결정계수&#x3D;설명력):  0.7183,\tAdjusted R-squared:  0.709 \nR-squared (결정계수&#x3D;설명력) : 0~1\n\n1로 가까워질수록 설명력이 좋다.\n0.7183에 나머지 0.3817의 요인을 찾아야된다. \n\n\n4)회귀분석(1)단순회귀분석 : 독립변수가 1개, 종속변수가 1개일 때 함\n\n방법1 : lm(data &#x3D; 데이터세트, 종석변수 ~ 독립변수)\n\n방법2 : lm(종석변수 ~ 독립변수, data &#x3D; 데이터세트)\n\n방법3 : lm(데이터세트$종석변수 ~ 데이터세트$독립변수)\n\n귀무가설(H0): disp(배기량) 는 mpg(1개런당 주행마일)에 영향을 주지 않는다.\n\n대립가설(H1): disp는 mpg에 영향을 준다.\n\n\n1lm(data=mtcars, mpg~disp)\n\n1234567## ## Call:## lm(formula = mpg ~ disp, data = mtcars)## ## Coefficients:## (Intercept)         disp  ##    29.59985     -0.04122\n\ndisp의 계수(Coefficients)는 -0.04122이며, 절편은 29.59985\n\n123RA &lt;- lm(data=mtcars, mpg~disp) # 회귀분석 결과를 RA에summary(RA) #상세 분석결과\n\n123456789101112131415161718## ## Call:## lm(formula = mpg ~ disp, data = mtcars)## ## Residuals:##     Min      1Q  Median      3Q     Max ## -4.8922 -2.2022 -0.9631  1.6272  7.2305 ## ## Coefficients:##              Estimate Std. Error t value Pr(&gt;|t|)    ## (Intercept) 29.599855   1.229720  24.070  &lt; 2e-16 ***## disp        -0.041215   0.004712  -8.747 9.38e-10 ***## ---## Signif. codes:  0 &#x27;***&#x27; 0.001 &#x27;**&#x27; 0.01 &#x27;*&#x27; 0.05 &#x27;.&#x27; 0.1 &#x27; &#x27; 1## ## Residual standard error: 3.251 on 30 degrees of freedom## Multiple R-squared:  0.7183,\tAdjusted R-squared:  0.709 ## F-statistic: 76.51 on 1 and 30 DF,  p-value: 9.38e-10\n\n분석결과\n\n\n회귀모형은 유의수준 p&lt; .001에서 적합하며, 회귀식의 수정된 결정계수 (R^2)는 .709이다. 배기량이 연비에 미치는 회귀계수는 유의수준 p&lt;.001에서 -0.04이다.\n\n","dateCreated":"2022-06-24T09:00:00+09:00","dateModified":"2022-07-07T19:11:41+09:00","datePublished":"2022-06-24T09:00:00+09:00","description":"","headline":"day220624","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://bennypark.github.io/2022/06/24/day220624/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"url":"https://bennypark.github.io/2022/06/24/day220624/"}</script>
-    <meta name="description" content="복습 통계 검정  평균 차이 검정 : 수치데이터 + 번주 데이터(두 그룹)  중급 이상 : 세 그룹 이상   비율 차이 검정 : 번주 데이터  상관 관계 : 수치 데이터  회귀   분석을 위한 데이터가 적절한지 검정  등분산 검정, 수치 데이터가 정규분포를 이루는가(정규성 검정)     귀무가설, 대립가설 적절하게 설정    서울의 평균 임금과 부산의 평균">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="day220624">
-<meta property="og:url" content="https://bennypark.github.io/2022/06/24/day220624/index.html">
+    <script type="application/ld+json">{}</script>
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://bennypark.github.io/categories/%ED%86%B5%EA%B3%84/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="복습 통계 검정  평균 차이 검정 : 수치데이터 + 번주 데이터(두 그룹)  중급 이상 : 세 그룹 이상   비율 차이 검정 : 번주 데이터  상관 관계 : 수치 데이터  회귀   분석을 위한 데이터가 적절한지 검정  등분산 검정, 수치 데이터가 정규분포를 이루는가(정규성 검정)     귀무가설, 대립가설 적절하게 설정    서울의 평균 임금과 부산의 평균">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-24T00:00:00.000Z">
-<meta property="article:modified_time" content="2022-07-07T10:11:41.577Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
     
@@ -41,8 +37,6 @@
     
 
     
-        
-    
 </head>
 
     <body>
@@ -52,7 +46,7 @@
 
     
 
-<header id="header" data-behavior="4">
+<header id="header" data-behavior="1">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a
@@ -79,7 +73,7 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="4">
+<nav id="sidebar" data-behavior="1">
     <div class="sidebar-container">
         
         
@@ -245,22 +239,30 @@
 </nav>
 
             
-            <div id="main" data-behavior="4"
+            <div id="main" data-behavior="1"
                  class="
                         hasCoverMetaIn
                         ">
                 
-<article class="post">
+    <section class="postShorten-group main-content-wrap">
     
     
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title">
-            day220624
-        </h1>
-    
-    
-        <div class="post-meta">
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2022/06/24/day220624/"
+                            aria-label=": day220624"
+                        >
+                            day220624
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
     <time datetime="2022-06-24T09:00:00+09:00">
 	
 		    Jun 24, 2022
@@ -275,13 +277,10 @@
     
 </div>
 
-    
-</div>
-
-    
-    <div class="post-content markdown">
-        <div class="main-content-wrap">
-            <h2 id="복습"><a href="#복습" class="headerlink" title="복습"></a>복습</h2><ul>
+            </div>
+            
+                <div class="postShorten-content">
+                    <h2 id="복습"><a href="#복습" class="headerlink" title="복습"></a>복습</h2><ul>
 <li><p>통계 검정</p>
 <ul>
 <li><p>평균 차이 검정 : 수치데이터 + 번주 데이터(두 그룹)</p>
@@ -403,117 +402,37 @@
 <li>회귀모형은 유의수준 p&lt; .001에서 적합하며, 회귀식의 수정된 결정계수 (R^2)는 .709이다. 배기량이 연비에 미치는 회귀계수는 유의수준 p&lt;.001에서 -0.04이다.</li>
 </ul>
 
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2022/06/24/day220624/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
             
-
-
         </div>
-    </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
+        
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
         
         
-            <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2022/06/28/homework220628/"
-                    data-tooltip="(no title)"
-                    aria-label="PREVIOUS: (no title)"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2022/06/23/day220623/"
-                    data-tooltip="day220623"
-                    aria-label="NEXT: day220623"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
+        <li class="pagination-number">page 1 of 1</li>
     </ul>
 </div>
 
-
-        
-        
-            
-        
-    </div>
-</article>
+</section>
 
 
 
@@ -524,154 +443,6 @@
 </footer>
 
             </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2022/06/28/homework220628/"
-                    data-tooltip="(no title)"
-                    aria-label="PREVIOUS: (no title)"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2022/06/23/day220623/"
-                    data-tooltip="day220623"
-                    aria-label="NEXT: day220623"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/24/day220624/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
-</div>
-
-
-                </div>
-                
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
-        <i id="btn-close-shareoptions" class="fa fa-times"></i>
-        <ul class="share-options">
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/24/day220624/"
-                        aria-label="Share on Facebook"
-                    >
-                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/24/day220624/"
-                        aria-label="Share on Twitter"
-                    >
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/24/day220624/"
-                        aria-label="Share on Google+"
-                    >
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
-                    </a>
-                </li>
-            
-        </ul>
-    </div>
-
-
             
         </div>
         
@@ -709,8 +480,6 @@
 
 <!--SCRIPTS END-->
 
-
-    
 
 
 

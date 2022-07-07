@@ -1,132 +1,285 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+    
+<head>
     <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>day220623 - Hexo</title>
     <meta name="author" content="John Doe">
-
-
-
-
-
-
-
-<title>day220623 | Hexo</title>
-
-
-
-    <link rel="icon" href="/favicon.ico">
-
-
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
-</style>
-
-
-
-    <!-- stylesheets list from _config.yml -->
     
-    <link rel="stylesheet" href="/css/style.css">
     
-
-
-
-
-    <!-- scripts list from _config.yml -->
     
-    <script src="/js/frame.js"></script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"articleBody":"복습iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.-제목과 x축, y축 제목을 변경하세요. +x축 길이, y축 너비\n12library(ggplot2)str(iris)\n\n123456## &#x27;data.frame&#x27;:\t150 obs. of  5 variables:##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...\n\n12345ggplot(iris, aes(x= Sepal.Length, y=Sepal.Width, colour= Species))+   geom_point()+  labs(title=&quot;길이와 너비&quot;,         x=&quot;길이&quot;,       y=&quot;너비&quot;)\n\n\n123456789ggplot(iris, aes(x= Sepal.Length, y=Sepal.Width, colour= Species))+   geom_point()+  labs(title=&quot;길이와 너비&quot;,         x=&quot;길이&quot;,       y=&quot;너비&quot;)+  scale_color_manual(    labels= c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),    values= c(&quot;orange&quot;,&quot;blue&quot;, &quot;yellow&quot;)  )\n\n\n1ggplot(economics, aes(x= pce, y=pop))+geom_point()\n\n\n1str(economics)\n\n1234567## spec_tbl_df [574 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)##  $ date    : Date[1:574], format: &quot;1967-07-01&quot; &quot;1967-08-01&quot; ...##  $ pce     : num [1:574] 507 510 516 512 517 ...##  $ pop     : num [1:574] 198712 198911 199113 199311 199498 ...##  $ psavert : num [1:574] 12.6 12.6 11.9 12.9 12.8 11.8 11.7 12.3 11.7 12.3 ...##  $ uempmed : num [1:574] 4.5 4.7 4.6 4.9 4.7 4.8 5.1 4.5 4.1 4.6 ...##  $ unemploy: num [1:574] 2944 2945 2958 3143 3066 ...\n제 8장통계(statistics): 수량 데이터에서 다양한 방법으로 새로운 사실들을 찾아내는 학문\n1)기술통계기술통계(descriptive statistics): 평균, 최솟값, 최댓값, 중앙값과 같은 데이터의 특징을 알려주는 값들\n2)추론통계추론통계(inferential statistics): 변수 간의 관계를 파악하고, 이를 토대로 변수 간의 인과관계나 새로운 사실들을 밝혀내는 것(1)평균 차이 검정: 집단별로 평균의 차이가 실제로 있는가를 검정하는 것.예) 고등학교 3학년 국어 점수가 남학생 평균:82.1, 여학생 평균 82.3점. 남여학생의 점수차는 0.2점이다. 위 내용은 단순히 “이번 국어시험 점수가 여학생이 남학생보다 0.2점 높다.”는 결론을 통계적으로 검점해야 한다.\n(2)교차분석(&#x3D;빈도분석): 범주형 변수로 구성된 집단들의 관련성을 검정하는 통계 분석.\n(“카이제곱 검정, 카이스퀘어검정, 독립성 검정”이라고도 함)\n교차분석 결과는 관계가 있다, 없다 등2가지입니다.\n예)두개의 ‘소형 50세대와 대형 50세대’가 있는 아파트 2개 단지의 대소형 TV 소유 현황을 조사했다.1번 단지는 대형 TV 90개, 소형TV 10개 &#x3D;&gt; 아파트 크기와 TV크기는 관계 없음2번 단지는 대형 TV 55개, 소형TV 45개 &#x3D;&gt; 아파트 크기와 TV크기는 관계가 있다.\n(3)상관관계분석: 변수 간의 상관관계(correlation)를 알아 보는 것.관계의 경우의 수는 -1&lt;&#x3D;r&lt;&#x3D;1 |     높은 관계(+-0.7 이상), 다소 높은 관계(+-0.4+-0.7),     낮은 관계(+-0.2+-0.4), 관계 거의 없음(+-0.2 미만)음의 상관관계: &#96;양의 상관관계: 우상향\n(4)회귀분석: 독립변수와 종속변수간의 인과관계를 분석하는 것독립변수(independent variable):영향을 주는 변수종속변수(dependent variable): 영향을 받는 변수예)”월급이 증가하면 외식횟수가 늘어날 것”“월급”-&gt; 독립변수, “외식횟수” -&gt; 종속변수즉 월급의 증감이 외식횟수에 미치는 영향을 확률적으로 분석하는 것이 회귀 분석이다.\n\n통계 검정\n\n\n가설(hypothesis):어떤 현상을 설명하기 위해서 가정하는 명제, 증명되지 않은 추정.귀무가설(歸無假說):설정한 가설이 맞을 확률이 극히 적어서 처음부터 기각될 것으로 예상되는 가설\n\n두 그룹 간의 평균차이가 없다대립가설(對立假說):귀무가설이 기각될 경우 받아들여지는 가설 | 연구자가 검정하고자 하는 가설\n두 그룹간의 평균차이가 있다\nhypothesis\n\n연구 : 내가 궁금한 것을 찾는 것\n\n남자와 여자가 키가 동일하다는 것?\n\n가설검정에서 인정하는 유의 수준\n\n\n\n5%, 1%, 0.1% 또는 10%-오차범위 내에 있느냐? 밖에 있는냐?\n\n\nA후보의 44%, B후보의 42%\n\n유의수준 &gt; 0.05  3 통계 분석 사례\n\n남녀 등 두 집단의 평균 차이를 분석할 때는 독립표본 t검정을 한다. t.test() 사용.\n\n방법1 t.test(data&#x3D;데이터세트, 종속변수(비교값) ~ 독립변수(비교대상))방법2 t.test(데이터세트$종속변수(비교값) ~ 데이터세트$독립변수(비교대상))예제) mpg1.csv의 trans 변수는 기어변속방법으로 auto(자동식)와 manual(수동식)가 있다. 두방식에 따라 cty평균이 통게적으로 유의미한 차이가 있는지 알아보자. %cty: 도시에서 1갤런당 달리는 거리.    독립변수는 trans, 종속변수는 cty\nt.test \n\n어떻게 데이터를 입력하는지 확인\np-value, 유의수준 0.05 이상: 귀무가설 | 0.05이내: 대립가설\n\n1mpg1 &lt;- read.csv(&quot;mpg1.csv&quot;, stringsAsFactors = F)\n\n\nt.test검정\n\n\n귀무가설 : auto 와 manual 의 cty평균은 차이가 없다\n대립가설 : auto 와 manual 의 cty평균은 차이가 있다.\n\n1t.test(data = mpg1, cty ~trans)\n\n1234567891011## ## \tWelch Two Sample t-test## ## data:  cty by trans## t = -4.5375, df = 132.32, p-value = 1.263e-05## alternative hypothesis: true difference in means between group auto and group manual is not equal to 0## 95 percent confidence interval:##  -3.887311 -1.527033## sample estimates:##   mean in group auto mean in group manual ##             15.96815             18.67532\n\n12#종속변수(y값) ~ 독립변수(x값) #반응변수 ~ 설명변수수\np-value &#x3D;유의수준 : ‘e-n’은 ‘10의 n승분의 1(1&#x2F;10^n)’이며, ‘e+n’은 ‘10의 n승(10^n)’을 의미한다.1.263e-05&#x3D; 1.263&#x2F;100000\nauto는 15.96815, manual은  18.67532이 검정의 결과로 auto와 manual의 평균은 차이가 있다. 대립가설을 채택할 수 있다.\n결론\ncty평균거리는 자동식이 15.97마일, 수동식이 18.68마일이다. 유의수준(p)이 0.05보다 작아서 통계적으로 유의미한 차이가 있기 때문에 수동식의 평균이 자동시의 평균보다 약 2.7마일 길다고 할 수 있다.\n\n\n주의사항 : 추론식이기에 ‘길다’라는 확정적인 표현 보다는 ‘길다고 할 수 있다’라고 추론식으로 쓰는 것이 좋다.  + 만약 p-value가 .05보다 크면 “유의수준이 0.05 보다 크기 때문에 자동식과 수동식의 평균은 통계적으로 유의미한 차이가 없다”라고 쓰면된다. -두 그룹의 평균 차이검정\n\n사전 필수 검증\n\n등분산 검정정\n\n두 그룹간의 분산이 비슷하면 -&gt; t.test(모수검정)\n두 그룹간의 분신이 다르다면-&gt; 비모수 검정\n귀무가설 : 두그룹간의 분이 비슷하다.대립가설: 두그룹간의 분산이 다름.\n\n\n\n교차 분석\n범주형 변수들이 관계가 있다는 것을 검정\n비율에 차이가 있는지 검정\n교차 분석 검정은 r의 chisq.test()함수로 진행\n귀무가설 : trans에 따라 drv(4,f,r)의 차이가 없다.\n대립가설 : trans에 따라 drv의 차이가 있다.\n빈도표 &#x2F; 비율\n\n1table(mpg1$trans, mpg1$drv) #교차 분석\n\n1234##         ##           4  f  r##   auto   75 65 17##   manual 28 41  8\n\n비율\n\n1prop.table(table(mpg1$trans, mpg1$drv), 1)\n\n1234##         ##                  4         f         r##   auto   0.4777070 0.4140127 0.1082803##   manual 0.3636364 0.5324675 0.1038961\n\nauto 4륜 구동(4)인 47.8%\nmanual 전륜 구동(f) 54.2% 가장 많음\n실제로 통계적으로 봤을 때, 차이가 있는지 검정\n\n1chisq.test(mpg1$trans, mpg1$drv)\n\n12345## ## \tPearson&#x27;s Chi-squared test## ## data:  mpg1$trans and mpg1$drv## X-squared = 3.1368, df = 2, p-value = 0.2084\n눈에 보이는 수치로만 통계를 믿지 말고 유의수준\n","dateCreated":"2022-06-23T09:15:00+09:00","dateModified":"2022-06-24T14:30:41+09:00","datePublished":"2022-06-23T09:15:00+09:00","description":"","headline":"day220623","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://bennypark.github.io/2022/06/23/day220623/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"url":"https://bennypark.github.io/2022/06/23/day220623/"}</script>
+    <meta name="description" content="복습iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.-제목과 x축, y축 제목을 변경하세요. +x축 길이, y축 너비 12library(ggplot2)str(iris)  123456## &amp;#x27;data.frame&amp;#x27;:	150 obs. of  5 variables:##  $ Sepal.Length:">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="day220623">
+<meta property="og:url" content="https://bennypark.github.io/2022/06/23/day220623/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="복습iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.-제목과 x축, y축 제목을 변경하세요. +x축 길이, y축 너비 12library(ggplot2)str(iris)  123456## &amp;#x27;data.frame&amp;#x27;:	150 obs. of  5 variables:##  $ Sepal.Length:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0623/unnamed-chunk-1-1.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0623/unnamed-chunk-1-2.png">
+<meta property="og:image" content="https://bennypark.github.io/images/rmd_0623/unnamed-chunk-1-3.png">
+<meta property="article:published_time" content="2022-06-23T00:15:00.000Z">
+<meta property="article:modified_time" content="2022-06-24T05:30:41.046Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bennypark.github.io/images/rmd_0623/unnamed-chunk-1-1.png">
     
-
-
-
-
-
-
-
-
-
-
-  <meta name="generator" content="Hexo 6.2.0"></head>
-  <body>
-    <div class="mask-border">
-    </div>
-
-    <div class="wrapper">
-
-      <div class="header">
-  <div class="flex-container">
-    <div class="header-inner">
-      <div class="site-brand-container">
-        <a href="/">
-          
-            Frame.
-          
-        </a>
-      </div>
-      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
-        Menu
-      </div>
-      <nav class="site-nav">
-        <ul class="menu-list">
-          
-            
-              <li class="menu-item">
-                <a href="/">Home</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/archives/">Archive</a>
-              </li> 
-                   
-          
-            
-              <li class="menu-item">
-                <a href="/categories/gallery/">Gallery</a>
-              </li> 
-                   
-          
-        </ul>
-      </nav>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main">
-        <div class="flex-container">
-          <article id="post">
-
-  
-    <div class="post-head">
-    <div class="post-info">
-        <div class="tag-list">
-            
-        </div>
-        <div class="post-title">
-            
-            
-                day220623
-            
-            
-        </div>
-        <span class="post-date">
-            Jun 23, 2022
-        </span>
-    </div>
-    <div class="post-img">
+    
         
-            <div class="h-line-primary"></div>
-              
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-arrkiiau2acevix01ksbscircv21bfs3axzlz4bngbpri5k6aooxfosdkoho.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hexo
+        </a>
     </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            day220623
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-06-23T09:15:00+09:00">
+	
+		    Jun 23, 2022
+    	
+    </time>
+    
 </div>
-    <div class="post-content">
-    <h2 id="복습"><a href="#복습" class="headerlink" title="복습"></a>복습</h2><p>iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.<br>-제목과 x축, y축 제목을 변경하세요.<br> +x축 길이, y축 너비</p>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h2 id="복습"><a href="#복습" class="headerlink" title="복습"></a>복습</h2><p>iris데이터, sepal.length, sepal.width 활용해서 종별로 산점도를 그리세요.<br>-제목과 x축, y축 제목을 변경하세요.<br> +x축 길이, y축 너비</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">str<span class="punctuation">(</span>iris<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## &#x27;data.frame&#x27;:	150 obs. of  5 variables:</span><br><span class="line">##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...</span><br><span class="line">##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...</span><br><span class="line">##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...</span><br><span class="line">##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span><br><span class="line">##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</span><br></pre></td></tr></table></figure>
@@ -244,62 +397,317 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## 	Pearson&#x27;s Chi-squared test</span><br><span class="line">## </span><br><span class="line">## data:  mpg1$trans and mpg1$drv</span><br><span class="line">## X-squared = 3.1368, df = 2, p-value = 0.2084</span><br></pre></td></tr></table></figure>
 <p>눈에 보이는 수치로만 통계를 믿지 말고 유의수준</p>
 
-</div> 
-
-<script>
-    window.onload = detectors();
-</script>
-    <div class="post-footer">
-    <div class="h-line-primary"></div>
-    <nav class="post-nav">
-        <div class="prev-item">
-           
-                <div class="icon arrow-left"></div>
-                <div class="post-link">
-                    <a href="/2022/06/24/day220624/">Prev</a>
-                </div>
             
+
+
         </div>
-        <div class="next-item">
-            
-                <div class="icon arrow-right"></div>
-                <div class="post-link">
-                  <a href="/2022/06/22/day220622_2/">Next</a>  
-                </div>  
-            
-        </div>
-    </nav>
-</div>
-
-    
-      <div class="post-comment">
-
-     
-
-     
-    
-    
-
-</div>
-     
-  
-</article>
-        </div>
-      </div>
-      
-      <div class="footer">
-    <div class="flex-container">
-        <div class="footer-text">
-            
-            
-            
-                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
                 
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/24/day220624/"
+                    data-tooltip="day220624"
+                    aria-label="PREVIOUS: day220624"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/22/day220622_2/"
+                    data-tooltip="day220622_2"
+                    aria-label="NEXT: day220622_2"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2022 John Doe. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/24/day220624/"
+                    data-tooltip="day220624"
+                    aria-label="PREVIOUS: day220624"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/22/day220622_2/"
+                    data-tooltip="day220622_2"
+                    aria-label="NEXT: day220622_2"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/23/day220623/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/06/23/day220623/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/06/23/day220623/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://bennypark.github.io/2022/06/23/day220623/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
         </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">John Doe</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
     </div>
 </div>
 
-    </div>
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
 
-  </body>
+<script src="/assets/js/script-xqxwkjd9me9m1n2ncobjfy2gql5z1zrgtqk8d9bxhhz5jew6nnzr8feahrfi.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

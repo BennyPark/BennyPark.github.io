@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hexo">
+    <title>day220719 - Hexo</title>
+    <meta name="author" content="John Doe">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"articleBody":"123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145SELECT table_name from user_tables;-- SQL vs PL/SQL-- SQL : 분석가 90% + 개발 30% --- 프로그래밍 성격이 얕음-- PL/SQL: 분석가 10% + 개발 70%+ DBA-- 입문 : 테이블, 뷰 --&gt; PL/SQL 함수, 프로시저CREATE TABLE eX2_1(    COLUMN1 CHAR(10 BYTE),    COLUMN2 VARCHAR2(10 BYTE),    COLUMN3 VARCHAR2(10),    COLUMN4 NUMBER);INSERT INTO ex2_1 (column1, column2) VALUES(&#x27;abc&#x27;,&#x27;abc&#x27;);select column1, length(column1) as len1,         column2,length(column2) as len2 from ex2_1;CREATE TABLE ex2_2(    COLUMN1 VARCHAR2(3),    COLUMN2 VARCHAR2(3 byte),    COLUMN3 VARCHAR2(3 char)    );INSERT INTO ex2_2 values(&#x27;abc&#x27;,&#x27;abc&#x27;, &#x27;abc&#x27;);SELECT COLUMN1, LENGTH(column1) as len1,column2, length(column2) as len2,column3, length(column3) as len3 from ex2_2;insert into ex2_2 values(&#x27;홍길동&#x27;, &#x27;홍길동&#x27;, &#x27;홍길동&#x27;);insert into ex2_2 (column3) values(&#x27;홍길동&#x27;);select column3, length(column3) as len3, lengthb(column3) as bytelen from ex2_2;create table ex2_3( COL_INT INTEGER,                     COL_DEC DECIMAL,                    COL_NUM NUMBER);SELECT column_id, column_name, data_type, data_length from user_tab_cols where table_name = &#x27;EX2_3&#x27; --조건식order by column_id;--정렬create table ex2_4(COL_FLOT1 FLOAT(32), --COL_FLOT2 FLOAT); --insert into ex2_4 (col_flot1, col_flot2) values(1234567891234,1234567891234);select * from ex2_4;SELECT col_flot1, LENGTH(col_flot1) as len1,col_flot2, length(col_flot2) as len2 from ex2_4;create table ex2_5(COL_DATE DATE, COL_TIMESTAMP TIMESTAMP);INSERT INTO ex2_5 VALUES(SYSDATE, SYSTIMESTAMP);select * from ex2_5;create table ex2_6(col_null varchar2(10),col_not_null varchar2(10) not null);insert into ex2_6 values (&#x27;AA&#x27;,&#x27;&#x27;);insert into ex2_6 values (&#x27;AA&#x27;,&#x27;BB&#x27;);select * from ex2_6;SELECT constraint_name, constraint_type, table_name, search_condition FROM user_constraints WHERE table_name=&#x27;EX2_6&#x27;;create table ex2_7(COL_UNIQUE_NULL VARCHAR2(10) UNIQUE,COL_UNIQUE_NNULL VARCHAR2(10) UNIQUE NOT NULL,COL_UNIQUE VARCHAR2(10), CONSTRAINTS unique_nm1 UNIQUE(COL_UNIQUE));SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME, SEARCH_CONDITIONFROM USER_CONSTRAINTSWHERE TABLE_NAME = &#x27;EX2_7&#x27;;INSERT INTO EX2_7 VALUES(&#x27;AA&#x27;,&#x27;AA&#x27;, &#x27;AA&#x27;);INSERT INTO EX2_7 VALUES(&#x27;AA&#x27;,&#x27;AA&#x27;, &#x27;AA&#x27;);INSERT INTO EX2_7 VALUES(&#x27;&#x27;,&#x27;BB&#x27;,&#x27;CC&#x27;);CREATE TABLE ex2_8(COL1 VARCHAR2(10) PRIMARY KEY,-- 기본 키: UNIQUE, NOT NULL,(2가지가 적용 안됨): 테이블 당 1개의 기본키만 설정 가능COL2 VARCHAR2(10) );CREATE TABLE ex2_9(num1 NUMBER CONSTRAINTS check1 CHECK ( num1 BETWEEN 1 AND 9),gender VARCHAR2(10) CONSTRAINTS check2 CHECK ( gender IN (&#x27;MALE&#x27;,&#x27;FEMALE&#x27;)));select constraint_name, constraint_type, table_name, search_conditionfrom user_constraintswhere table_name = &#x27;EX2_9&#x27;;insert into ex2_9 values (10, &#x27;MAN&#x27;);insert into ex2_9 values (9, &#x27;FEMALE&#x27;);CREATE TABLE EX2_10(COL1 VARCHAR2(10) NOT NULL,COL2 VARCHAR2(10) NULL,CREATE_DATE DATE DEFAULT SYSDATE);-- alter session set nls_date_format=&#x27;YYYY/MM/DD alter session set nls_date_format=&#x27;YYYY/MM/DD HH24:MI:SS&#x27;;INSERT INTO EX2_10 (COL1, COL2) VALUES (&#x27;AA&#x27;,&#x27;BB&#x27;);SELECT * FROM EX2_10;DROP TABLE EX2_10;-- 컬럼 명 변경ALTER TABLE EX2_10 RENAME COLUMN COL1 TO COL11;-- 테이블 컬럼 내역 확인DESC EX2_10;alter table ex2_10 modify col2 varchar2(30);desc ex2_10;-- 컬럼 col3 추가 alter table ex2_10 add col3 number;desc ex2_10;-- 컬럼 col3 삭제alter table ex2_10 drop column col3;desc ex2_10;-- 제약조건 추가alter table ex2_10 add constraints pk_ex2_10 primary key (col11);desc ex2_10;select constraint_name, constraint_type, table_name, search_conditionfrom user_constraintswhere table_name= &#x27;EX2_10&#x27;;--제약조건 삭제alter table ex2_10 drop constraints pk_ex2_10;select constraint_name, constraint_type, table_name, search_conditionfrom user_constraintswhere table_name= &#x27;EX2_10&#x27;;create table ex2_9_1 as select * from ex2_9;create or replace view emp_dept_v1 as select a.employee_id, a.emp_name, a.department_id, b.department_namefrom employees a,departments bwhere a.department_id = b.department_id;drop view emp_dept_v1;","dateCreated":"2022-07-19T09:00:00+09:00","dateModified":"2022-07-19T16:57:26+09:00","datePublished":"2022-07-19T09:00:00+09:00","description":"","headline":"day220719","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://bennypark.github.io/2022/07/19/SQL_day220719/"},"publisher":{"@type":"Organization","name":"John Doe","sameAs":["https://github.com/","https://twitter.com/","https://facebook.com/"]},"url":"https://bennypark.github.io/2022/07/19/SQL_day220719/"}</script>
+    <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="day220719">
+<meta property="og:url" content="https://bennypark.github.io/2022/07/19/SQL_day220719/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-19T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-19T07:57:26.859Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-arrkiiau2acevix01ksbscircv21bfs3axzlz4bngbpri5k6aooxfosdkoho.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hexo
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://twitter.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Twitter"
+                        >
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://facebook.com/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="Facebook"
+                        >
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/atom.xml"
+                            
+                            rel="noopener"
+                            title="RSS"
+                        >
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            day220719
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-07-19T09:00:00+09:00">
+	
+		    Jul 19, 2022
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/SQL/">SQL</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">from</span> user_tables;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- SQL vs PL/SQL</span></span><br><span class="line"><span class="comment">-- SQL : 분석가 90% + 개발 30% </span></span><br><span class="line"><span class="comment">--- 프로그래밍 성격이 얕음</span></span><br><span class="line"><span class="comment">-- PL/SQL: 분석가 10% + 개발 70%+ DBA</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 입문 : 테이블, 뷰 --&gt; PL/SQL 함수, 프로시저</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> eX2_1(</span><br><span class="line">    COLUMN1 <span class="type">CHAR</span>(<span class="number">10</span> BYTE),</span><br><span class="line">    COLUMN2 VARCHAR2(<span class="number">10</span> BYTE),</span><br><span class="line">    COLUMN3 VARCHAR2(<span class="number">10</span>),</span><br><span class="line">    COLUMN4 NUMBER</span><br><span class="line">);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> ex2_1 (column1, column2) <span class="keyword">VALUES</span>(<span class="string">&#x27;abc&#x27;</span>,<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line"><span class="keyword">select</span> column1, length(column1) <span class="keyword">as</span> len1, </span><br><span class="line">        column2,length(column2) <span class="keyword">as</span> len2 <span class="keyword">from</span> ex2_1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> ex2_2(</span><br><span class="line">    COLUMN1 VARCHAR2(<span class="number">3</span>),</span><br><span class="line">    COLUMN2 VARCHAR2(<span class="number">3</span> byte),</span><br><span class="line">    COLUMN3 VARCHAR2(<span class="number">3</span> <span class="type">char</span>)</span><br><span class="line">    );</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> ex2_2 <span class="keyword">values</span>(<span class="string">&#x27;abc&#x27;</span>,<span class="string">&#x27;abc&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line"><span class="keyword">SELECT</span> COLUMN1, LENGTH(column1) <span class="keyword">as</span> len1,</span><br><span class="line">column2, length(column2) <span class="keyword">as</span> len2,</span><br><span class="line">column3, length(column3) <span class="keyword">as</span> len3 <span class="keyword">from</span> ex2_2;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_2 <span class="keyword">values</span>(<span class="string">&#x27;홍길동&#x27;</span>, <span class="string">&#x27;홍길동&#x27;</span>, <span class="string">&#x27;홍길동&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_2 (column3) <span class="keyword">values</span>(<span class="string">&#x27;홍길동&#x27;</span>);</span><br><span class="line"><span class="keyword">select</span> column3, length(column3) <span class="keyword">as</span> len3, lengthb(column3) <span class="keyword">as</span> bytelen <span class="keyword">from</span> ex2_2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_3( COL_INT <span class="type">INTEGER</span>, </span><br><span class="line">                    COL_DEC <span class="type">DECIMAL</span>, </span><br><span class="line">                   COL_NUM NUMBER);</span><br><span class="line"><span class="keyword">SELECT</span> column_id, column_name, data_type, data_length </span><br><span class="line"><span class="keyword">from</span> user_tab_cols </span><br><span class="line"><span class="keyword">where</span> table_name <span class="operator">=</span> <span class="string">&#x27;EX2_3&#x27;</span> <span class="comment">--조건식</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> column_id;<span class="comment">--정렬</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_4(</span><br><span class="line">COL_FLOT1 <span class="type">FLOAT</span>(<span class="number">32</span>), <span class="comment">--</span></span><br><span class="line">COL_FLOT2 <span class="type">FLOAT</span>); <span class="comment">--</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_4 (col_flot1, col_flot2) </span><br><span class="line"><span class="keyword">values</span>(<span class="number">1234567891234</span>,<span class="number">1234567891234</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ex2_4;</span><br><span class="line"><span class="keyword">SELECT</span> col_flot1, LENGTH(col_flot1) <span class="keyword">as</span> len1,</span><br><span class="line">col_flot2, length(col_flot2) <span class="keyword">as</span> len2 <span class="keyword">from</span> ex2_4;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_5(COL_DATE <span class="type">DATE</span>, COL_TIMESTAMP <span class="type">TIMESTAMP</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> ex2_5 <span class="keyword">VALUES</span>(SYSDATE, SYSTIMESTAMP);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ex2_5;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_6(col_null varchar2(<span class="number">10</span>),</span><br><span class="line">col_not_null varchar2(<span class="number">10</span>) <span class="keyword">not</span> <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_6 <span class="keyword">values</span> (<span class="string">&#x27;AA&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_6 <span class="keyword">values</span> (<span class="string">&#x27;AA&#x27;</span>,<span class="string">&#x27;BB&#x27;</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ex2_6;</span><br><span class="line"><span class="keyword">SELECT</span> constraint_name, constraint_type, table_name, search_condition </span><br><span class="line"><span class="keyword">FROM</span> user_constraints </span><br><span class="line"><span class="keyword">WHERE</span> table_name<span class="operator">=</span><span class="string">&#x27;EX2_6&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_7(</span><br><span class="line">COL_UNIQUE_NULL VARCHAR2(<span class="number">10</span>) <span class="keyword">UNIQUE</span>,</span><br><span class="line">COL_UNIQUE_NNULL VARCHAR2(<span class="number">10</span>) <span class="keyword">UNIQUE</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">COL_UNIQUE VARCHAR2(<span class="number">10</span>), </span><br><span class="line">CONSTRAINTS unique_nm1 <span class="keyword">UNIQUE</span>(COL_UNIQUE));</span><br><span class="line"><span class="keyword">SELECT</span> CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME, SEARCH_CONDITION</span><br><span class="line"><span class="keyword">FROM</span> USER_CONSTRAINTS</span><br><span class="line"><span class="keyword">WHERE</span> TABLE_NAME <span class="operator">=</span> <span class="string">&#x27;EX2_7&#x27;</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> EX2_7 <span class="keyword">VALUES</span>(<span class="string">&#x27;AA&#x27;</span>,<span class="string">&#x27;AA&#x27;</span>, <span class="string">&#x27;AA&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> EX2_7 <span class="keyword">VALUES</span>(<span class="string">&#x27;AA&#x27;</span>,<span class="string">&#x27;AA&#x27;</span>, <span class="string">&#x27;AA&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> EX2_7 <span class="keyword">VALUES</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;BB&#x27;</span>,<span class="string">&#x27;CC&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> ex2_8(</span><br><span class="line">COL1 VARCHAR2(<span class="number">10</span>) <span class="keyword">PRIMARY</span> KEY,<span class="comment">-- 기본 키: UNIQUE, NOT NULL,(2가지가 적용 안됨): 테이블 당 1개의 기본키만 설정 가능</span></span><br><span class="line">COL2 VARCHAR2(<span class="number">10</span>) );</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> ex2_9(</span><br><span class="line">num1 NUMBER </span><br><span class="line">CONSTRAINTS check1 <span class="keyword">CHECK</span> ( num1 <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">AND</span> <span class="number">9</span>),</span><br><span class="line">gender VARCHAR2(<span class="number">10</span>) </span><br><span class="line">CONSTRAINTS check2 <span class="keyword">CHECK</span> ( gender <span class="keyword">IN</span> (<span class="string">&#x27;MALE&#x27;</span>,<span class="string">&#x27;FEMALE&#x27;</span>)));</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> constraint_name, constraint_type, table_name, search_condition</span><br><span class="line"><span class="keyword">from</span> user_constraints</span><br><span class="line"><span class="keyword">where</span> table_name <span class="operator">=</span> <span class="string">&#x27;EX2_9&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_9 <span class="keyword">values</span> (<span class="number">10</span>, <span class="string">&#x27;MAN&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> ex2_9 <span class="keyword">values</span> (<span class="number">9</span>, <span class="string">&#x27;FEMALE&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> EX2_10(</span><br><span class="line">COL1 VARCHAR2(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">COL2 VARCHAR2(<span class="number">10</span>) <span class="keyword">NULL</span>,</span><br><span class="line">CREATE_DATE <span class="type">DATE</span> <span class="keyword">DEFAULT</span> SYSDATE);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- alter session set nls_date_format=&#x27;YYYY/MM/DD </span></span><br><span class="line"><span class="keyword">alter</span> session <span class="keyword">set</span> nls_date_format<span class="operator">=</span><span class="string">&#x27;YYYY/MM/DD HH24:MI:SS&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> EX2_10 (COL1, COL2) <span class="keyword">VALUES</span> (<span class="string">&#x27;AA&#x27;</span>,<span class="string">&#x27;BB&#x27;</span>);</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> EX2_10;</span><br><span class="line"></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> EX2_10;</span><br><span class="line"><span class="comment">-- 컬럼 명 변경</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> EX2_10 RENAME <span class="keyword">COLUMN</span> COL1 <span class="keyword">TO</span> COL11;</span><br><span class="line"><span class="comment">-- 테이블 컬럼 내역 확인</span></span><br><span class="line"><span class="keyword">DESC</span> EX2_10;</span><br><span class="line"></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> ex2_10 modify col2 varchar2(<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">desc</span> ex2_10;</span><br><span class="line"><span class="comment">-- 컬럼 col3 추가 </span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> ex2_10 <span class="keyword">add</span> col3 number;</span><br><span class="line"><span class="keyword">desc</span> ex2_10;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 컬럼 col3 삭제</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> ex2_10 <span class="keyword">drop</span> <span class="keyword">column</span> col3;</span><br><span class="line"><span class="keyword">desc</span> ex2_10;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 제약조건 추가</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> ex2_10 <span class="keyword">add</span> <span class="keyword">constraint</span>s pk_ex2_10 <span class="keyword">primary</span> key (col11);</span><br><span class="line"><span class="keyword">desc</span> ex2_10;</span><br><span class="line"><span class="keyword">select</span> constraint_name, constraint_type, table_name, search_condition</span><br><span class="line"><span class="keyword">from</span> user_constraints</span><br><span class="line"><span class="keyword">where</span> table_name<span class="operator">=</span> <span class="string">&#x27;EX2_10&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--제약조건 삭제</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> ex2_10 <span class="keyword">drop</span> constraints pk_ex2_10;</span><br><span class="line"><span class="keyword">select</span> constraint_name, constraint_type, table_name, search_condition</span><br><span class="line"><span class="keyword">from</span> user_constraints</span><br><span class="line"><span class="keyword">where</span> table_name<span class="operator">=</span> <span class="string">&#x27;EX2_10&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ex2_9_1 <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> ex2_9;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_dept_v1 <span class="keyword">as</span> </span><br><span class="line"><span class="keyword">select</span> a.employee_id, a.emp_name, a.department_id, b.department_name</span><br><span class="line"><span class="keyword">from</span> employees a,</span><br><span class="line">departments b</span><br><span class="line"><span class="keyword">where</span> a.department_id <span class="operator">=</span> b.department_id;</span><br><span class="line"></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> emp_dept_v1;</span><br></pre></td></tr></table></figure>
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/28/homework220628/"
+                    data-tooltip="(no title)"
+                    aria-label="NEXT: (no title)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2022 John Doe. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/06/28/homework220628/"
+                    data-tooltip="(no title)"
+                    aria-label="NEXT: (no title)"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=https://bennypark.github.io/2022/07/19/SQL_day220719/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">John Doe</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-xqxwkjd9me9m1n2ncobjfy2gql5z1zrgtqk8d9bxhhz5jew6nnzr8feahrfi.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
